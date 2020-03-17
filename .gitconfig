@@ -2,5 +2,5 @@
         name = lostways
         email = andrew@lostways.com
 [alias]
-    cmp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
-    st  = "status"
+        cmp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
+        st  = "status"
