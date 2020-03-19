@@ -20,6 +20,10 @@ inoremap <Down>  <NOP>
 inoremap <Left>  <NOP>
 inoremap <Right> <NOP>
 
+"--------------Paths----------------"
+set wildmenu
+set path+=**
+
 "--------------Visuals----------------"
 "colorscheme desert
 
