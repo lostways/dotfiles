@@ -12,8 +12,21 @@ sudo apt-get -y install vim
 # Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-# Tmux
-sudo apt-get -y install tmux
+# Tmux 2.6
+sudo apt-get -y remove tmux
+sudo apt-get -y install wget tar libevent-dev libncurses-dev
+
+VERSION=2.6
+wget https://github.com/tmux/tmux/releases/download/${VERSION}/tmux-${VERSION}.tar.gz
+tar xf tmux-${VERSION}.tar.gz
+rm -f tmux-${VERSION}.tar.gz
+cd tmux-${VERSION}
+./configure
+make
+sudo make install
+cd -
+sudo rm -rf /usr/local/src/tmux-\*
+sudo mv tmux-${VERSION} /usr/local/src
 
 # TPM
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
