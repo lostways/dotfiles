@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-vinegar'
 Plugin 'preservim/nerdtree'
 Plugin 'kien/ctrlp.vim'
+Plugin 'StanAngeloff/php.vim'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
