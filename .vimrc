@@ -54,6 +54,9 @@ set expandtab
 "CtrlP
 let g:ctrlp_custom_ignore = 'node_modules\DS_Store\|git'
 
+"NerdTree
+let NERDTreeHijackNetrw = 0
+
 "--------------Spell Check-------------"
 augroup markdownSpell
         autocmd!
