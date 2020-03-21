@@ -51,10 +51,13 @@ set expandtab
 
 "--------------Plugins-------------------"
 
-"CtrlP
+"/////////CTRLP////////"
 let g:ctrlp_custom_ignore = 'node_modules\DS_Store\|git'
 
-"NerdTree
+" CtrlP Recent FIles
+nmap <c-p> :CtrlPMRUFiles<cr>
+
+"/////////NerdTree/////"
 let NERDTreeHijackNetrw = 0
 
 "--------------Spell Check-------------"
