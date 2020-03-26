@@ -33,7 +33,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 sudo apt-get -y install zsh
 
 # Set ZSH to default shell
-chsh -s /usr/bin/zsh ${USER}
+sudo chsh -s /usr/bin/zsh ${USER}
 
 # Oh-My-ZSh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
