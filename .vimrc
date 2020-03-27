@@ -49,6 +49,9 @@ set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
 
+" Python
+autocmd FileType python setlocal shiftwidth=2 softtabstop=2 expandtab
+
 "--------------Plugins-------------------"
 
 "/////////CTRLP////////"
