@@ -36,4 +36,4 @@ sudo apt-get -y install zsh
 sudo chsh -s /usr/bin/zsh ${USER}
 
 # Oh-My-ZSh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
