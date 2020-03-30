@@ -23,3 +23,9 @@ ln -sf $PWD/.vimrc ~/.vimrc
 ln -sf $PWD/.vim/plugins.vim ~/.vim/plugins.vim
 ln -sf $PWD/.gitconfig ~/.gitconfig
 ln -sf $PWD/.tmux.conf ~/.tmux.conf
+
+# ==============
+# Reload tmux config
+# ==============
+
+tmux source-file ~/.tmux.conf
