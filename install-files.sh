@@ -25,6 +25,19 @@ ln -sf $PWD/.gitconfig ~/.gitconfig
 ln -sf $PWD/.tmux.conf ~/.tmux.conf
 
 # ==============
+# Backup and Install ZSHRC
+# ==============
+
+mv ~/.zshrc ~/.zshrc.old
+
+# ==============
+# Create new zshrc that sources ours
+# Note: put all custom zshrc stuff in ~/.zshrc.local
+# ==============
+
+printf "source '$HOME/dotfiles/.zshrc'" > ~/.zshrc
+
+# ==============
 # Reload tmux config
 # ==============
 
