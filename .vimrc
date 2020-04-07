@@ -20,6 +20,11 @@ inoremap <Down>  <NOP>
 inoremap <Left>  <NOP>
 inoremap <Right> <NOP>
 
+"--------------Swap Files----------------"
+"set swapfile
+"set dir=~/.vimswp
+set noswapfile
+
 "--------------Paths----------------"
 set wildmenu
 set path+=**
