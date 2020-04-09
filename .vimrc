@@ -41,6 +41,11 @@ set incsearch
 set splitright
 set splitbelow
 
+" Remap split movements to match tmux
+map <silent> <C-h> <Plug>WinMoveLeft
+map <silent> <C-j> <Plug>WinMoveDown
+map <silent> <C-k> <Plug>WinMoveUp
+map <silent> <C-l> <Plug>WinMoveRight
 
 "--------------TABS------------"
 filetype plugin indent on
