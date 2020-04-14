@@ -6,6 +6,7 @@ syntax enable
 
 set backspace=indent,eol,start
 set number
+set mouse=a
 
 "--------------DONT DO IT-------------"
 " don't use arrowkeys
