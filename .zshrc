@@ -98,6 +98,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+#aliases
+
+alias ls="ls -la"
+
 if [ -f "$HOME/.zshrc.local" ]; then
     source $HOME/.zshrc.local
 fi
