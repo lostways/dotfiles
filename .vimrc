@@ -7,6 +7,7 @@ syntax enable
 set backspace=indent,eol,start
 set number
 set mouse=a
+set ttymouse=sgr
 
 "--------------DONT DO IT-------------"
 " don't use arrowkeys
@@ -29,6 +30,9 @@ set noswapfile
 "--------------Paths----------------"
 set wildmenu
 set path+=**
+
+"--------------Tabline----------------"
+"set showtabline
 
 "--------------Visuals----------------"
 "colorscheme desert
