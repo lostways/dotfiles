@@ -52,6 +52,10 @@ map <silent> <C-j> <Plug>WinMoveDown
 map <silent> <C-k> <Plug>WinMoveUp
 map <silent> <C-l> <Plug>WinMoveRight
 
+"--------------SCROLLING------------"
+noremap <C-e> 10<C-e>
+noremap <C-y> 10<C-y>
+
 "--------------TABS------------"
 filetype plugin indent on
 
