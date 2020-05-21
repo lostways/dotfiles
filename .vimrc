@@ -37,6 +37,11 @@ set path+=**
 "--------------Visuals----------------"
 "colorscheme desert
 
+"--------------Paste----------------"
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
 "--------------Searching----------------"
 set hlsearch
 set incsearch
