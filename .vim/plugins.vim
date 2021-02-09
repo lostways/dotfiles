@@ -16,6 +16,11 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'prettier/vim-prettier'
 
+" JS, JSX, TS syntax highlighting
+Plugin 'yuezk/vim-js'
+Plugin 'HerringtonDarkholme/yats.vim'
+Plugin 'maxmellon/vim-jsx-pretty'
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
