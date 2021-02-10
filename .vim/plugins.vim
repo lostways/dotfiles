@@ -21,6 +21,9 @@ Plugin 'yuezk/vim-js'
 Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'maxmellon/vim-jsx-pretty'
 
+" Code completion
+Plugin 'ycm-core/YouCompleteMe'
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo

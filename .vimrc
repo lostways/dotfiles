@@ -4,6 +4,7 @@ so ~/.vim/plugins.vim
 syntax enable
 
 
+set encoding=utf-8
 set backspace=indent,eol,start
 set number
 set mouse=a

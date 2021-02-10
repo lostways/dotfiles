@@ -7,6 +7,10 @@ sudo apt-get -y install curl
 # VIM
 sudo apt-get -y install vim
 
+# Regs for YouCompleteMe
+sudo apt-get -y install build-essential cmake vim-nox python3-dev
+sudo apt-get -y install mono-complete golang default-jdk 
+
 # Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
