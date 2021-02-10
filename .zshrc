@@ -101,6 +101,7 @@ source $ZSH/oh-my-zsh.sh
 #aliases
 
 alias ls="ls -la"
+alias venv="python3 -m venv venv && . venv/bin/activate && pip install -U pip setuptools wheel" 
 
 if [ -f "$HOME/.zshrc.local" ]; then
     source $HOME/.zshrc.local
