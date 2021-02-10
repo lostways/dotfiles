@@ -24,7 +24,7 @@ if which node > /dev/null
 fi
 
 TMUX_VERSION=$(tmux -V)
-if [ "$TMUX_VERSION"=="tmux 2.6" ]; then
+if [ "$TMUX_VERSION" = "tmux 2.6" ]; then
         echo "Tmux 2.6 already installed. skipping..."
     else
         # Tmux 2.6
