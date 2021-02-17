@@ -7,9 +7,6 @@ sudo apt-get -y install curl
 # VIM
 sudo apt-get -y install vim
 
-# Regs for YouCompleteMe
-sudo apt-get -y install build-essential cmake vim-nox python3-dev
-sudo apt-get -y install mono-complete golang default-jdk 
 
 # Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -47,6 +44,14 @@ fi
 
 # Prettier
 sudo npm install -g prettier
+
+# Regs for YouCompleteMe
+echo -n "Would you like to install reqs for YouCompleteMe? [y/n] "
+read answer
+if [ "$answer" = "y" ]; then 
+	sudo apt-get -y install build-essential cmake vim-nox python3-dev
+	sudo apt-get -y install mono-complete golang default-jdk 
+fi
 
 # TPM
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
