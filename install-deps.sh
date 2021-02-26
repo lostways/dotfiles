@@ -45,17 +45,6 @@ fi
 # Prettier
 sudo npm install -g prettier
 
-# ESLINT
-sudo npm install -g eslint
-
-# Regs for YouCompleteMe
-echo -n "Would you like to install reqs for YouCompleteMe? [y/n] "
-read answer
-if [ "$answer" = "y" ]; then 
-	sudo apt-get -y install build-essential cmake vim-nox python3-dev
-	sudo apt-get -y install mono-complete golang default-jdk 
-fi
-
 # TPM
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 

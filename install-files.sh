@@ -47,14 +47,4 @@ tmux source-file ~/.tmux.conf
 # Install Vim Plugins
 # ==============
 
-vim +PluginInstall +qall
- 
-# ==============
-# Compile YouCompleteMe
-# ==============
-
-echo -n "Would you like to compile YouCompleteMe? [y/n] "
-read answer
-if [ "$answer" = "y" ]; then 
-  python3 ~/.vim/bundle/YouCompleteMe/install.py --all
-fi
+vim +PluginInstall "+CocInstall coc-tsserver"

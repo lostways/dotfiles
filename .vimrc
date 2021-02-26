@@ -38,6 +38,9 @@ set path+=**
 "--------------Visuals----------------"
 colorscheme desert
 
+" Popup Menu (for coc)
+hi Pmenu ctermbg=black ctermfg=white
+
 "--------------Paste----------------"
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
