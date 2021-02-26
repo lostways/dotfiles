@@ -36,7 +36,7 @@ set path+=**
 "set showtabline
 
 "--------------Visuals----------------"
-"colorscheme desert
+colorscheme desert
 
 "--------------Paste----------------"
 nnoremap <F2> :set invpaste paste?<CR>

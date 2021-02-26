@@ -48,6 +48,9 @@ fi
 # Prettier
 sudo npm install -g prettier
 
+# ESLINT
+sudo npm install -g eslint
+
 # TPM
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
