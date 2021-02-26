@@ -36,7 +36,7 @@ set path+=**
 "set showtabline
 
 "--------------Visuals----------------"
-"colorscheme desert
+colorscheme desert
 
 "--------------Paste----------------"
 nnoremap <F2> :set invpaste paste?<CR>
@@ -80,7 +80,7 @@ autocmd FileType python setlocal shiftwidth=2 softtabstop=2 expandtab
 "--------------Plugins-------------------"
 
 "/////////CTRLP////////"
-let g:ctrlp_custom_ignore = 'node_modules\DS_Store\|git'
+let g:ctrlp_custom_ignore = 'vendor\|node_modules\|DS_Store\|git'
 
 " CtrlP Recent FIles
 nmap <c-p> :CtrlPMRUFiles<cr>
