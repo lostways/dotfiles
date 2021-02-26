@@ -7,9 +7,6 @@ sudo apt-get -y install curl
 # VIM
 sudo apt-get -y install vim
 
-# Regs for YouCompleteMe
-sudo apt-get -y install build-essential cmake vim-nox python3-dev
-sudo apt-get -y install mono-complete golang default-jdk 
 
 # Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -24,7 +21,7 @@ if which node > /dev/null
 fi
 
 TMUX_VERSION=$(tmux -V)
-if [ "$TMUX_VERSION"=="tmux 2.6" ]; then
+if [ "$TMUX_VERSION" = "tmux 2.6" ]; then
         echo "Tmux 2.6 already installed. skipping..."
     else
         # Tmux 2.6
@@ -50,6 +47,14 @@ sudo npm install -g prettier
 
 # ESLINT
 sudo npm install -g eslint
+
+# Regs for YouCompleteMe
+echo -n "Would you like to install reqs for YouCompleteMe? [y/n] "
+read answer
+if [ "$answer" = "y" ]; then 
+	sudo apt-get -y install build-essential cmake vim-nox python3-dev
+	sudo apt-get -y install mono-complete golang default-jdk 
+fi
 
 # TPM
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
