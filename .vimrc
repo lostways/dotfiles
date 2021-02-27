@@ -38,6 +38,9 @@ set path+=**
 "--------------Visuals----------------"
 colorscheme desert
 
+" Visual Mode
+highlight Visual cterm=bold ctermbg=Blue ctermfg=White
+
 " Popup Menu (for coc)
 hi Pmenu ctermbg=black ctermfg=white
 
