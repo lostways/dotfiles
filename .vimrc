@@ -104,7 +104,7 @@ augroup END
 "--------------Mappings----------------"
 
 " Escape insert mode with jj
-imap jj <esc>
+imap jj <esc>l
 
 " Make it easy to edit the VIMRC "
 nmap <Leader>ev :tabedit $MYVIMRC<cr>

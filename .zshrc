@@ -98,14 +98,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-#aliases
+# PATH
+export PATH=$PATH:$HOME/dotfiles/bin
 
+# Aliases
 alias ls="ls -la"
 alias venv="python3 -m venv venv && . venv/bin/activate && pip install -U pip setuptools wheel" 
 
 if [ -f "$HOME/.zshrc.local" ]; then
     source $HOME/.zshrc.local
 fi
-
-# Tmux Sessions
-$HOME/dotfiles/bin/tm
