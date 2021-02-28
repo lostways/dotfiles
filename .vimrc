@@ -9,6 +9,8 @@ set backspace=indent,eol,start
 set number
 set mouse=a
 set ttymouse=sgr
+set updatetime=300
+set laststatus=2
 
 "--------------DONT DO IT-------------"
 " don't use arrowkeys
@@ -68,6 +70,20 @@ map <silent> <C-l> <Plug>WinMoveRight
 noremap <C-e> 10<C-e>
 noremap <C-y> 10<C-y>
 
+"--------------Mappings----------------"
+
+" Escape insert mode with jj
+imap jj <esc>l
+
+" Make it easy to edit the VIMRC "
+nmap <Leader>ev :tabedit $MYVIMRC<cr>
+
+" Add simple highlight removal"
+nmap <Leader><space> :nohlsearch<cr>
+
+" Save file with sudo"
+command! SudoWrite :execute ':silent w !sudo tee % > /dev/null' | edit!
+
 "--------------TABS------------"
 filetype plugin indent on
 
@@ -94,8 +110,34 @@ nmap <c-p> :CtrlPMRUFiles<cr>
 "/////////NerdTree/////"
 let NERDTreeHijackNetrw = 0
 
+"Toggle Nerd Tree"
+nmap <Leader>e :NERDTreeToggle<cr>
+
 "/////////Prettier/////"
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+"/////////CoC/////"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location
+" list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+inoremap <silent><expr> <cr> (pumvisible() ? '<esc> :call coc#refresh()<cr>' : "\<cr>")
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 "--------------Spell Check-------------"
 augroup markdownSpell
@@ -104,22 +146,6 @@ augroup markdownSpell
         autocmd BufRead,BufNewFile *.md setlocal spell
 augroup END
 
-"--------------Mappings----------------"
-
-" Escape insert mode with jj
-imap jj <esc>l
-
-" Make it easy to edit the VIMRC "
-nmap <Leader>ev :tabedit $MYVIMRC<cr>
-
-"Add simple highlight removal"
-nmap <Leader><space> :nohlsearch<cr>
-
-"Toggle Nerd Tree"
-nmap <Leader>e :NERDTreeToggle<cr>
-
-"Save file with sudo"
-command! W :execute ':silent w !sudo tee % > /dev/null' | edit!
 
 "-------------Auto-Command-------------"
 "Automatically source the Vimrc file on save"
