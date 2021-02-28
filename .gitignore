@@ -2,4 +2,4 @@
 *.swo
 
 # Ignore utils/*
-#utils/*
+utils/*
