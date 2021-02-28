@@ -66,6 +66,14 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 echo "\nInstalling TPM..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# SSHTO
+echo "\nInstalling SSHTO"
+git clone git@github.com:vaniacer/sshto.git
+cd sshto
+mv sshto ../utils/
+cd ..
+rm -rf sshto
+
 # ZSH
 echo "\nInstalling ZSH..."
 sudo apt-get -y install zsh

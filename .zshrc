@@ -99,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # PATH
-export PATH=$PATH:$HOME/dotfiles/bin
+export PATH=$PATH:$HOME/dotfiles/bin:$HOME/dotfiles/utils
 
 # Aliases
 alias ls="ls -la"
