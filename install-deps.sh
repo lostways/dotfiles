@@ -68,6 +68,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # SSHTO
 echo "\nInstalling SSHTO"
+sudo apt-get install -y dialog
 git clone git@github.com:vaniacer/sshto.git
 cd sshto
 mv sshto ../utils/
