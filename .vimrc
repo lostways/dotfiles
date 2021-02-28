@@ -94,6 +94,9 @@ nmap <c-p> :CtrlPMRUFiles<cr>
 "/////////NerdTree/////"
 let NERDTreeHijackNetrw = 0
 
+"/////////Prettier/////"
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
 "--------------Spell Check-------------"
 augroup markdownSpell
         autocmd!

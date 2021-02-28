@@ -47,4 +47,4 @@ tmux source-file ~/.tmux.conf
 # Install Vim Plugins
 # ==============
 
-vim +PluginClean +PluginInstall +PluginUpdate "+CocInstall coc-tsserver"
+vim +PluginClean +PluginInstall +PluginUpdate +qall

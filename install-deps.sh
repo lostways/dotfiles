@@ -62,9 +62,6 @@ fi
 echo "\nInstalling Vundle..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-# Prettier
-sudo npm install -g prettier
-
 # TPM
 echo "\nInstalling TPM..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

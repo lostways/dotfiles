@@ -14,7 +14,6 @@ Plugin 'tpope/vim-vinegar'
 Plugin 'preservim/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'StanAngeloff/php.vim'
-Plugin 'prettier/vim-prettier'
 
 " JS, JSX, TS syntax highlighting
 Plugin 'yuezk/vim-js'
@@ -23,6 +22,10 @@ Plugin 'maxmellon/vim-jsx-pretty'
 
 " Code completion + linting
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = [
+    \ 'coc-tsserver',
+    \ 'coc-prettier'
+  \ ]
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
