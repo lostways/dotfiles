@@ -102,7 +102,7 @@ autocmd FileType python setlocal shiftwidth=2 softtabstop=2 expandtab
 "--------------Plugins-------------------"
 
 "/////////CTRLP////////"
-let g:ctrlp_custom_ignore = 'vendor\|node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = '_output\|vendor\|node_modules\|DS_Store\|git'
 
 " CtrlP Recent FIles
 nmap <c-p> :CtrlPMRUFiles<cr>
@@ -138,6 +138,12 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+"/////////Fugitive////"
+" Fugitive Conflict Resolution
+nnoremap <leader>gd :Gvdiffsplit!<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
 
 "--------------Spell Check-------------"
 augroup markdownSpell

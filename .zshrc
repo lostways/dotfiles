@@ -104,6 +104,9 @@ export PATH=$PATH:$HOME/dotfiles/bin:$HOME/dotfiles/utils
 # Aliases
 alias ls="ls -la"
 alias venv="python3 -m venv venv && . venv/bin/activate && pip install -U pip setuptools wheel" 
+alias gs="git status"
+alias gc="git commit -m"
+alias ga="git add"
 
 if [ -f "$HOME/.zshrc.local" ]; then
     source $HOME/.zshrc.local
