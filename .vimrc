@@ -50,6 +50,7 @@ hi Pmenu ctermbg=black ctermfg=white
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
+set clipboard=unnamed
 
 "--------------Searching----------------"
 set hlsearch
