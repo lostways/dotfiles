@@ -15,6 +15,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'ludovicchabant/vim-gutentags'
 
 " JS, JSX, TS syntax highlighting
 Plugin 'yuezk/vim-js'

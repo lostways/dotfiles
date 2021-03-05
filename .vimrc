@@ -99,6 +99,8 @@ set expandtab
 " Python
 autocmd FileType python setlocal shiftwidth=2 softtabstop=2 expandtab
 
+" PHP
+autocmd FileType php setlocal shiftwidth=4 softtabstop=4 expandtab
 "--------------Plugins-------------------"
 
 "/////////CTRLP////////"

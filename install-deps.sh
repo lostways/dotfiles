@@ -8,6 +8,10 @@ sudo apt-get update
 echo "\nInstaling Curl.."
 sudo apt-get -y install curl
 
+# CTAGS
+echo "\nInstaling Ctags.."
+sudo apt-get -y install ctags
+
 # VIM
 echo "\nInstaling Vim.."
 if vim --cmd 'if v:version >= 802 | q | else | cq | fi' ;
