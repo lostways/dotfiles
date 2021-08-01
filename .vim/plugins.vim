@@ -27,8 +27,8 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = [
     \ 'coc-tsserver',
     \ 'coc-prettier',
-    \ 'coc-snippets'
-    \ 'coc-jedi'
+    \ 'coc-snippets',
+    \ 'coc-jedi',
   \ ]
 
 " Snippets
