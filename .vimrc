@@ -127,6 +127,9 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
+" Use <C-j> for trigger snippet expand.
+imap <C-j> <Plug>(coc-snippets-expand)
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -141,6 +144,7 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
 
 "/////////Fugitive////"
 " Fugitive Conflict Resolution
