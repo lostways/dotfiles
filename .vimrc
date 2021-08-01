@@ -34,6 +34,11 @@ set noswapfile
 set wildmenu
 set path+=**
 
+"--------------Cursor----------------"
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[3 q"
+let &t_EI = "\<Esc>[2 q"
+
 "--------------Tabline----------------"
 "set showtabline
 
@@ -98,7 +103,13 @@ set shiftwidth=2
 set expandtab
 
 " Python
-autocmd FileType python setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType python setlocal
+  \ shiftwidth=4
+  \ softtabstop=4
+  \ expandtab
+  \ tabstop=4
+  \ autoindent
+  \ textwidth=79
 
 " PHP
 autocmd FileType php setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -147,6 +158,7 @@ endfunction
 nnoremap <leader>gd :Gvdiffsplit!<CR>
 nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
+
 
 "--------------Spell Check-------------"
 augroup markdownSpell
