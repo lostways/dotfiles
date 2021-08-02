@@ -27,12 +27,8 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = [
     \ 'coc-tsserver',
     \ 'coc-prettier',
-    \ 'coc-snippets',
-    \ 'coc-jedi',
+    \ 'coc-pyright',
   \ ]
-
-" Snippets
-Plugin 'mlaursen/vim-react-snippets'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
