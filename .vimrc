@@ -107,8 +107,8 @@ autocmd FileType python setlocal
   \ shiftwidth=4
   \ softtabstop=4
   \ expandtab
-  \ tabstop=4
   \ autoindent
+  \ tabstop=4
   \ textwidth=79
 
 " PHP
