@@ -113,6 +113,10 @@ autocmd FileType python setlocal
 
 " PHP
 autocmd FileType php setlocal shiftwidth=4 softtabstop=4 expandtab
+
+" MAKEFILE
+autocmd FileType make setlocal noexpandtab shiftwidth=8 softtabstop=0 syntax=make
+
 "--------------Plugins-------------------"
 
 "/////////CTRLP////////"
