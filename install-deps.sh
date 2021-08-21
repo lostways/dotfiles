@@ -28,26 +28,7 @@ fi
 
 # TMUX
 echo "\nInstalling TMUX"
-TMUX_VERSION=$(tmux -V)
-if [[ "$TMUX_VERSION" == "tmux 2.6" ]]; then
-        echo "Tmux 2.6 already installed. skipping..."
-    else
-        # Tmux 2.6
-        sudo apt-get -y remove tmux
-        sudo apt-get -y install wget tar libevent-dev libncurses-dev
-
-        VERSION=2.6
-        wget https://github.com/tmux/tmux/releases/download/${VERSION}/tmux-${VERSION}.tar.gz
-        tar xf tmux-${VERSION}.tar.gz
-        rm -f tmux-${VERSION}.tar.gz
-        cd tmux-${VERSION}
-        ./configure
-        make
-        sudo make install
-        cd -
-        sudo rm -rf /usr/local/src/tmux-\*
-        sudo mv tmux-${VERSION} /usr/local/src
-fi
+sudo apt-get -y install tmux
 
 # Vundle
 echo "\nInstalling Vundle..."
