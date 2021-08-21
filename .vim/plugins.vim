@@ -25,6 +25,7 @@ Plugin 'maxmellon/vim-jsx-pretty'
 
 " Code completion + linting
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+
 let g:coc_global_extensions = [
     \ 'coc-tsserver',
     \ 'coc-prettier',
