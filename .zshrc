@@ -107,8 +107,9 @@ alias venva="source .venv/bin/activate"
 alias gs="git status"
 alias gc="git commit -m"
 alias ga="git add"
+
 venv() {
-  python3 -m venv .venv --prompt=$1 && . .venv/bin/activate && pip install -U pip setuptools wheel 
+  python3 -m venv .venv --prompt=${1:-venv} && . .venv/bin/activate && pip install -U pip setuptools wheel 
 }
 
 if [ -f "$HOME/.zshrc.local" ]; then
