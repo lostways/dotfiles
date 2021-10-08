@@ -15,7 +15,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'tpope/vim-fugitive'
-Plugin 'ludovicchabant/vim-gutentags'
+" Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'hattya/python-indent.vim'
 
 " JS, JSX, TS syntax highlighting

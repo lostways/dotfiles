@@ -22,7 +22,7 @@ if [ "$(node -v | cut -c2-3)" -gt 12 ];
     then
         echo "Already running Node > 12.0.0 Skipping..."
     else
-        curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+        curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
         sudo apt-get install -y nodejs
 fi
 
