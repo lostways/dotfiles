@@ -13,22 +13,53 @@ echo "\nInstaling Ctags.."
 sudo apt-get -y install ctags
 
 # VIM
-echo "\nInstaling Vim.."
-sudo apt-get -y install vim-nox
+read -p "Install VIM from source [y/n]?" -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  echo "\nInstaling Vim.."
+  #sudo apt-get -y install vim-nox
+  sudo apt-get -y install ncurses-dev
+  cd /tmp
+  git clone https://github.com/vim/vim.git
+  cd vim/src
+  make distclean
+  ./configure --enable-pythoninterp
+  make
+  sudo make install
+  rm -rf /tmp/vim
+  cd ~/dotfiles
+fi
 
 # Node and NPM
 echo "\nInstalling Node..."
-if [ "$(node -v | cut -c2-3)" -gt 12 ];
+if [ "$(node -v | cut -c2-3)" -gt 16 ];
     then
-        echo "Already running Node > 12.0.0 Skipping..."
+        echo "Already running Node > 16.0.0 Skipping..."
     else
         curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
         sudo apt-get install -y nodejs
 fi
 
 # TMUX
-echo "\nInstalling TMUX"
-sudo apt-get -y install tmux
+read -p "Install TMUX from source [y/n]?" -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  echo "\nInstalling TMUX"
+  #sudo apt-get -y install tmux
+  sudo apt-get -y install libevent-dev
+  sudo apt-get -y install ncurses-dev
+  sudo apt-get -y install autoconf automake pkg-config byacc
+  cd /tmp
+  git clone https://github.com/tmux/tmux.git
+  cd tmux
+  sh autogen.sh
+  ./configure && make
+  sudo make install
+  rm -rf /tmp/tmux
+  cd ~/dotfiles
+fi
 
 # Vundle
 echo "\nInstalling Vundle..."
@@ -41,11 +72,12 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # SSHTO
 echo "\nInstalling SSHTO"
 sudo apt-get install -y dialog
+cd /tmp
 git clone git@github.com:vaniacer/sshto.git
 cd sshto
-mv sshto ../utils/
-cd ..
-rm -rf sshto
+mv sshto ~/dotfiles/utils/
+rm -rf /tmp/sshto
+cd ~/dotfiles
 
 # ZSH
 echo "\nInstalling ZSH..."
