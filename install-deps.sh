@@ -24,7 +24,7 @@ then
   git clone https://github.com/vim/vim.git
   cd vim/src
   make distclean
-  ./configure --enable-pythoninterp
+  ./configure --enable-python3interp=yes
   make
   sudo make install
   rm -rf /tmp/vim
