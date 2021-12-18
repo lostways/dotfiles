@@ -48,3 +48,12 @@ tmux source-file ~/.tmux.conf
 # ==============
 
 vim +PluginClean +PluginInstall +PluginUpdate +qall
+
+# ==============
+# Finish CoC install
+# ==============
+
+cd ~/.vim/bundle/coc.nvim
+npm install
+
+cd $PWD
