@@ -35,7 +35,7 @@ if [ "$(node -v | cut -c2-3)" -gt 18 ];
     then
         echo "Already running Node > 18.0.0 Skipping..."
     else
-        curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+        curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
         sudo apt-get install -y nodejs
 fi
 
@@ -73,5 +73,4 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # FISH
 echo "\nInstalling FISH..."
-sudo apt-get -y install fish
-
+sudo apt-get install fish -y

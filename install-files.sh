@@ -1,33 +1,19 @@
-#!/usr/bin/fish
+#!/bin/bash
 
 # Install Files
 
 # VARS
 
-set PWD `pwd`
+PWD=`pwd`
 
 # ==============
-# Backup existing files
+# Remove existing files
 # ==============
 
-mv ~/.vimrc ~/.vimrc.old
-mv ~/.vim/plugins.vim ~/.vim/plugins.vim.old
-mv ~/.gitconfig ~/.gitconfig.old
-mv ~/.tmux.conf ~/.tmux.conf.old
-mv ~/.config/fish/fish_variables ~/.config/fish/fish_variables.old
-
-# =============
-# Fish Plugins
-# =============
-
-# Fisher
-echo "\nInstalling Fisher..."
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
-fisher install jorgebucaran/fisher
-
-# Tide
-echo "\nInstalling Tide Plugin"
-fisher install IlanCosman/tide@v5
+rm ~/.vimrc
+rm ~/.vim/plugins.vim
+rm ~/.gitconfig
+rm ~/.tmux.conf
 
 # ==============
 # Create symlinks to files
@@ -37,7 +23,11 @@ ln -sf $PWD/.vimrc ~/.vimrc
 ln -sf $PWD/.vim/plugins.vim ~/.vim/plugins.vim
 ln -sf $PWD/.gitconfig ~/.gitconfig
 ln -sf $PWD/.tmux.conf ~/.tmux.conf
-ln -sf $PWD/fish_variables ~/.config/fish/fish_variables
+
+# ==============
+# Create links to scripts
+# ==============
+sudo ln -sf $PWD/bin/tm /usr/local/bin
 
 # ==============
 # Reload tmux config
