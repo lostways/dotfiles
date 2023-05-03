@@ -31,9 +31,9 @@ fi
 
 # Node and NPM
 echo "\nInstalling Node..."
-if [ "$(node -v | cut -c2-3)" -gt 16 ];
+if [ "$(node -v | cut -c2-3)" -gt 18 ];
     then
-        echo "Already running Node > 16.0.0 Skipping..."
+        echo "Already running Node > 18.0.0 Skipping..."
     else
         curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
         sudo apt-get install -y nodejs
@@ -74,7 +74,4 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # FISH
 echo "\nInstalling FISH..."
 sudo apt-get -y install fish
-
-echo "\nStarting fish..."
-exec fish
 
