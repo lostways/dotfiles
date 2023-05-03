@@ -4,14 +4,14 @@
 
 # VARS
 
-PWD=`pwd`
+set PWD `pwd`
 
 # ==============
 # Backup existing files
 # ==============
 
 mv ~/.vimrc ~/.vimrc.old
-mv ~/.vim/plugins.vim.old
+mv ~/.vim/plugins.vim ~/.vim/plugins.vim.old
 mv ~/.gitconfig ~/.gitconfig.old
 mv ~/.tmux.conf ~/.tmux.conf.old
 mv ~/.config/fish/fish_variables ~/.config/fish/fish_variables.old
