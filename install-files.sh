@@ -1,4 +1,4 @@
-#!/bin/fish
+#!/usr/bin/fish
 
 # Install Files
 
@@ -12,9 +12,9 @@ PWD=`pwd`
 
 mv ~/.vimrc ~/.vimrc.old
 mv ~/.vim/plugins.vim.old
-mv ~/.gitconfig.old
-mv ~/.tmux.conf.old
-mv ~/.config/fish/fish_variables.old
+mv ~/.gitconfig ~/.gitconfig.old
+mv ~/.tmux.conf ~/.tmux.conf.old
+mv ~/.config/fish/fish_variables ~/.config/fish/fish_variables.old
 
 # =============
 # Fish Plugins
@@ -22,7 +22,8 @@ mv ~/.config/fish/fish_variables.old
 
 # Fisher
 echo "\nInstalling Fisher..."
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
+fisher install jorgebucaran/fisher
 
 # Tide
 echo "\nInstalling Tide Plugin"
