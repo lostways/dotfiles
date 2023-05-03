@@ -125,6 +125,7 @@ nmap <c-p> :CtrlPMRUFiles<cr>
 
 "/////////NerdTree/////"
 let NERDTreeHijackNetrw = 0
+let NERDTreeShowHidden = 1
 
 "Toggle Nerd Tree"
 nmap <Leader>e :NERDTreeToggle<cr>

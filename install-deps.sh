@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Installs dependancies for dotfiles
 
 # Update apt sources
@@ -7,10 +9,6 @@ sudo apt-get update
 # CURL
 echo "\nInstaling Curl.."
 sudo apt-get -y install curl
-
-# CTAGS
-echo "\nInstaling Ctags.."
-sudo apt-get -y install ctags
 
 # VIM
 read -p "Install VIM from source [y/n]?" -n 1 -r
@@ -61,6 +59,10 @@ then
   cd ~/dotfiles
 fi
 
+# LSD
+echo "\nInstalling lsd..."
+sudo apt-get -y install lsd
+
 # Vundle
 echo "\nInstalling Vundle..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -69,27 +71,17 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 echo "\nInstalling TPM..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# SSHTO
-echo "\nInstalling SSHTO"
-sudo apt-get install -y dialog
-cd /tmp
-git clone git@github.com:vaniacer/sshto.git
-cd sshto
-mv sshto ~/dotfiles/utils/
-rm -rf /tmp/sshto
-cd ~/dotfiles
+# FISH
+echo "\nInstalling FISH..."
+sudo apt-get -y install fish
 
-# ZSH
-echo "\nInstalling ZSH..."
-sudo apt-get -y install zsh
+echo "\nStarting fish..."
+exec fish
 
-# Set ZSH to default shell
-echo "\nSet ZSH as default shell..."
-sudo chsh -s /usr/bin/zsh ${USER}
+# Fisher
+echo "\nInstalling Fisher..."
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
-# Oh-My-ZSh
-echo "\nInstalling OhMyZsh.."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
-
-# Restart session
-exec zsh
+# Tide
+echo "\nInstalling Tide Plugin"
+fisher install IlanCosman/tide@v5
