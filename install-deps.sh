@@ -78,10 +78,3 @@ sudo apt-get -y install fish
 echo "\nStarting fish..."
 exec fish
 
-# Fisher
-echo "\nInstalling Fisher..."
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
-
-# Tide
-echo "\nInstalling Tide Plugin"
-fisher install IlanCosman/tide@v5

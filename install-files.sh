@@ -16,6 +16,18 @@ mv ~/.gitconfig.old
 mv ~/.tmux.conf.old
 mv ~/.config/fish/fish_variables.old
 
+# =============
+# Fish Plugins
+# =============
+
+# Fisher
+echo "\nInstalling Fisher..."
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+
+# Tide
+echo "\nInstalling Tide Plugin"
+fisher install IlanCosman/tide@v5
+
 # ==============
 # Create symlinks to files
 # ==============
@@ -44,5 +56,6 @@ vim +PluginClean +PluginInstall +PluginUpdate +qall
 
 cd ~/.vim/bundle/coc.nvim
 npm install
+
 
 cd $PWD
