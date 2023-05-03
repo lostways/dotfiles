@@ -104,15 +104,13 @@ set expandtab
 
 " Python
 autocmd FileType python setlocal
-  \ shiftwidth=4
-  \ softtabstop=4
-  \ expandtab
+  \ shiftwidth=2
+  \ softtabstop=2
   \ autoindent
-  \ tabstop=4
-  \ textwidth=79
+  \ tabstop=2
 
 " PHP
-autocmd FileType php setlocal shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType php setlocal shiftwidth=4 softtabstop=4 
 
 " MAKEFILE
 autocmd FileType make setlocal noexpandtab shiftwidth=8 softtabstop=0 syntax=make
