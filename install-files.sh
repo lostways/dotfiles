@@ -16,6 +16,14 @@ rm ~/.gitconfig
 rm ~/.tmux.conf
 
 # ==============
+# Backup fish config
+# ==============
+
+if [ -f ~/.config/fish/config.fish ]; then
+  mv ~/.config/fish/config.fish ~/.config/fish/config.fish.bak
+fi
+
+# ==============
 # Create symlinks to files
 # ==============
 
@@ -23,10 +31,12 @@ ln -sf $PWD/.vimrc ~/.vimrc
 ln -sf $PWD/.vim/plugins.vim ~/.vim/plugins.vim
 ln -sf $PWD/.gitconfig ~/.gitconfig
 ln -sf $PWD/.tmux.conf ~/.tmux.conf
+ln -sf $PWD/config.fish ~/.config/fish/config.fish
 
 # ==============
 # Create links to scripts
 # ==============
+
 sudo ln -sf $PWD/bin/tm /usr/local/bin
 
 # ==============
@@ -47,6 +57,12 @@ vim +PluginClean +PluginInstall +PluginUpdate +qall
 
 cd ~/.vim/bundle/coc.nvim
 npm install
+
+# ==============
+# Setup GitHub CoPilot
+# ==============
+
+vim "+Copilot setup" +qall
 
 
 cd $PWD

@@ -24,6 +24,9 @@ Plugin 'yuezk/vim-js'
 Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'maxmellon/vim-jsx-pretty'
 
+" GitHub CoPilot
+Plugin 'github/copilot.vim'
+
 " Code completion + linting
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 

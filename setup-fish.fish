@@ -10,3 +10,7 @@ curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fi
 # Tide
 echo "\nInstalling Tide Plugin"
 fisher install IlanCosman/tide@v5
+
+# Z
+echo "\nInstalling Z Plugin"
+fisher install jethrokuan/z

@@ -20,9 +20,9 @@ curl https://pyenv.run | bash
 # setup dot files
 # =================
 
-grep -qxF 'source "$HOME/dotfiles/.zprofile.pyenv"' ~/.zprofile || echo 'source "$HOME/dotfiles/.zprofile.pyenv"' >> ~/.zprofile
-grep -qxF 'source "$HOME/dotfiles/.profile.pyenv"' ~/.profile || echo 'source "$HOME/dotfiles/.profile.pyenv"' >> ~/.profile
-grep -qxF 'source "$HOME/dotfiles/.zshrc.pyenv"' ~/.zshrc.local || echo 'source "$HOME/dotfiles/.zshrc.pyenv"' >> ~/.zshrc.local
+grep -qxF 'source "$HOME/dotfiles/pyenv/.zprofile.pyenv"' ~/.zprofile || echo 'source "$HOME/dotfiles/pyenv/.zprofile.pyenv"' >> ~/.zprofile
+grep -qxF 'source "$HOME/dotfiles/pyenv/.profile.pyenv"' ~/.profile || echo 'source "$HOME/dotfiles/pyenv/.profile.pyenv"' >> ~/.profile
+grep -qxF 'source "$HOME/dotfiles/pyenv/.zshrc.pyenv"' ~/.zshrc.local || echo 'source "$HOME/dotfiles/pyenv/.zshrc.pyenv"' >> ~/.zshrc.local
 
 
 # =================
