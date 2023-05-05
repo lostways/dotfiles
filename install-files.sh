@@ -59,6 +59,12 @@ cd ~/.vim/bundle/coc.nvim
 npm install
 
 # ==============
+# Install Scoped Coc Extensions
+# ==============
+
+vim -c 'CocInstall -sync @yaegassy/coc-intelephense' -c 'q'
+
+# ==============
 # Setup GitHub CoPilot
 # ==============
 
