@@ -90,6 +90,10 @@ nmap <Leader><space> :nohlsearch<cr>
 " Save file with sudo"
 command! SudoWrite :execute ':silent w !sudo tee % > /dev/null' | edit!
 
+" System clipboard yank and paste
+nmap <Leader>y "*y
+nmap <Leader>p "*p
+
 "--------------TABS------------"
 filetype plugin indent on
 
@@ -123,6 +127,7 @@ let g:ctrlp_custom_ignore = '_output\|vendor\|node_modules\|DS_Store\|git'
 
 " CtrlP Recent FIles
 nmap <c-p> :CtrlPMRUFiles<cr>
+nmap <Leader>b :CtrlPBuffer<cr>
 
 "/////////NerdTree/////"
 let NERDTreeHijackNetrw = 0
