@@ -95,7 +95,7 @@ nmap <Leader>y "*y
 nmap <Leader>p "*p
 
 "--------------TABS------------"
-filetype plugin indent on
+filetype indent plugin on
 
 " show existing tab with 2 spaces width
 set tabstop=2
@@ -107,12 +107,13 @@ set shiftwidth=2
 set expandtab
 
 " Python
-autocmd FileType python setlocal
-  \ shiftwidth=4
-  \ softtabstop=4
-  \ autoindent
-  \ tabstop=4
-  \ expandtab
+autocmd BufRead,BufNewFile *.py
+  \ set shiftwidth=4
+  \ set softtabstop=4
+  \ set autoindent
+  \ set tabstop=4
+  \ set expandtab
+  \ set fileformat=unix
 
 " PHP
 autocmd FileType php setlocal shiftwidth=4 softtabstop=4 expandtab 
@@ -138,6 +139,11 @@ nmap <Leader>e :NERDTreeToggle<cr>
 
 "/////////Prettier/////"
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+"////////CocFormat/////"
+
+" Add `:Format` command to format current buffer
+command! -nargs=0 Format :call CocActionAsync('format')
 
 "/////////CoC/////"
 
