@@ -21,6 +21,7 @@ rm ~/.tmux.conf
 
 if [ -f ~/.config/fish/config.fish ]; then
   mv ~/.config/fish/config.fish ~/.config/fish/config.fish.bak
+  ln -sf $PWD/config.fish ~/.config/fish/config.fish
 fi
 
 # ==============
@@ -31,7 +32,6 @@ ln -sf $PWD/.vimrc ~/.vimrc
 ln -sf $PWD/.vim/plugins.vim ~/.vim/plugins.vim
 ln -sf $PWD/.gitconfig ~/.gitconfig
 ln -sf $PWD/.tmux.conf ~/.tmux.conf
-ln -sf $PWD/config.fish ~/.config/fish/config.fish
 
 # ==============
 # Create links to scripts
