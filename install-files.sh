@@ -16,15 +16,6 @@ rm ~/.gitconfig
 rm ~/.tmux.conf
 
 # ==============
-# Backup fish config
-# ==============
-
-if [ -f ~/.config/fish/config.fish ]; then
-  mv ~/.config/fish/config.fish ~/.config/fish/config.fish.bak
-  ln -sf $PWD/config.fish ~/.config/fish/config.fish
-fi
-
-# ==============
 # Create symlinks to files
 # ==============
 
