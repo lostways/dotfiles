@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/usr/bin/bash
 
 # Install Python
 
@@ -38,9 +38,9 @@ source ~/.zshrc
 # =================
 
 pyenv update
-pyenv install 3.10.2
+pyenv install 3.11.4
 pyenv rehash
-pyenv global 3.10.2
+pyenv global 3.11.4
 pyenv versions
 
 echo "Please restart your session to finish install \n"

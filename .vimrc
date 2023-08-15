@@ -107,13 +107,13 @@ set shiftwidth=2
 set expandtab
 
 " Python
-autocmd BufRead,BufNewFile *.py
-  \ set shiftwidth=4
-  \ set softtabstop=4
-  \ set autoindent
-  \ set tabstop=4
-  \ set expandtab
-  \ set fileformat=unix
+autocmd BufRead,BufNewFile *.py setlocal
+  \ shiftwidth=4
+  \ softtabstop=4
+  \ autoindent
+  \ tabstop=4
+  \ expandtab
+  \ fileformat=unix
 
 " PHP
 autocmd FileType php setlocal shiftwidth=4 softtabstop=4 expandtab 
@@ -159,10 +159,10 @@ imap <C-j> <Plug>(coc-snippets-expand)
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+" inoremap <silent><expr> <TAB>
+"      \ pumvisible() ? "\<C-n>" :
+"      \ <SID>check_back_space() ? "\<TAB>" :
+"      \ coc#refresh()
 
 inoremap <silent><expr> <cr> (pumvisible() ? '<esc> :call coc#refresh()<cr>' : "\<cr>")
 

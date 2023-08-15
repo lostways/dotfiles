@@ -1,7 +1,7 @@
 #!/usr/bin/fish
 
 # Set Theme
-fish_config theme choose "ayu Dark"
+#fish_config theme choose "ayu Dark"
 
 # Fisher
 echo "\nInstalling Fisher..."
