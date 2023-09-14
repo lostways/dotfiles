@@ -18,6 +18,7 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'hattya/python-indent.vim'
 Plugin 'TovarishFin/vim-solidity'
+Plugin 'wuelnerdotexe/vim-astro'
 
 " JS, JSX, TS syntax highlighting
 Plugin 'yuezk/vim-js'
