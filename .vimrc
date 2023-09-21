@@ -146,6 +146,16 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 command! -nargs=0 Format :call CocActionAsync('format')
 
 "/////////CoC/////"
+nmap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gh :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location
