@@ -10,13 +10,22 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" Session Management
+Plugin 'tpope/vim-obsession'
+
+" File Management
 Plugin 'tpope/vim-vinegar'
 Plugin 'preservim/nerdtree'
 Plugin 'kien/ctrlp.vim'
+
+" PHP
 Plugin 'StanAngeloff/php.vim'
-Plugin 'tpope/vim-fugitive'
-" Plugin 'ludovicchabant/vim-gutentags'
+
+" Python
 Plugin 'hattya/python-indent.vim'
+
+" GIT
+Plugin 'tpope/vim-fugitive'
 Plugin 'TovarishFin/vim-solidity'
 Plugin 'wuelnerdotexe/vim-astro'
 
@@ -30,6 +39,8 @@ Plugin 'github/copilot.vim'
 
 " Code completion + linting
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Plugin 'ludovicchabant/vim-gutentags'
 
 let g:coc_global_extensions = [
     \ 'coc-tsserver',
