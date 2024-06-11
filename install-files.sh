@@ -10,8 +10,7 @@ PWD=`pwd`
 # Backup existing files
 # ==============
 
-cp ~/.vimrc ~/.vimrc.bak
-cp ~/.vim/plugins.vim ~/.vim/plugins.vim.bak
+cp ~/.config/nvim/init.lua ~/.config/nvim/init.lua.bak
 cp ~/.gitconfig ~/.gitconfig.bak
 cp ~/.tmux.conf ~/.tmux.conf.bak
 cp ~/.zshrc ~/.zshrc.bak
@@ -20,8 +19,7 @@ cp ~/.zshrc ~/.zshrc.bak
 # Remove existing files
 # ==============
 
-rm -rf ~/.vimrc
-rm -rf ~/.vim/plugins.vim
+rm -rf ~/.config/nvim/init.lua
 rm -rf ~/.gitconfig
 rm -rf ~/.tmux.conf
 rm -rf ~/.zshrc
@@ -30,8 +28,10 @@ rm -rf ~/.zshrc
 # Create symlinks to files
 # ==============
 
-ln -sf $PWD/.vimrc ~/.vimrc
-ln -sf $PWD/.vim/plugins.vim ~/.vim/plugins.vim
+# create nvim dir if it doesn't exist
+mkdir -p ~/.config/nvim
+
+ln -sf $PWD/nvim/init.lua ~/.config/nvim/init.lua
 ln -sf $PWD/.gitconfig ~/.gitconfig
 ln -sf $PWD/.tmux.conf ~/.tmux.conf
 
@@ -55,34 +55,15 @@ sudo ln -sf $PWD/bin/tm /usr/local/bin
 tmux source-file ~/.tmux.conf
 
 # ==============
-# Install Vim Plugins
-# ==============
-
-vim +PluginClean +PluginInstall +PluginUpdate +qall
-
-# ==============
-# Finish CoC install
-# ==============
-
-cd ~/.vim/bundle/coc.nvim
-npm install
-
-# ==============
-# Install Scoped Coc Extensions
-# ==============
-
-vim -c 'CocInstall -sync @yaegassy/coc-intelephense' -c 'q'
-
-# ==============
 # Install TPM Plugins
 # ==============
+
 ~/.tmux/plugins/tpm/bin/install_plugins
 
 # ==============
 # Setup GitHub CoPilot
 # ==============
 
-vim "+Copilot setup" +qall
-
+nvim "+Copilot setup" +qall
 
 cd $PWD

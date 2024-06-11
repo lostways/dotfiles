@@ -4,30 +4,21 @@
 
 # Update apt sources
 echo -e "\nUpdating APT Sources..."
+sudo add-apt-repository ppa:neovim-ppa/unstable -y
+sudo add-apt-repository ppa:fish-shell/release-3
 sudo apt-get update
 
 # CURL
 echo -e "\nInstaling Curl.."
 sudo apt-get -y install curl
 
-# VIM
-read -p "Install VIM from source [y/n]?" -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-  echo "\nInstaling Vim.."
-  #sudo apt-get -y install vim-nox
-  sudo apt-get -y install ncurses-dev
-  cd /tmp
-  git clone https://github.com/vim/vim.git
-  cd vim/src
-  make distclean
-  ./configure --enable-python3interp=yes
-  make
-  sudo make install
-  rm -rf /tmp/vim
-  cd ~/dotfiles
-fi
+# Install Ripgrep
+echo -e "\nInstalling Ripgrep..."
+sudo apt-get -y install ripgrep
+
+# NEOVIM
+echo -e "\nInstalling Neovim..."
+sudo apt-get -y install neovim
 
 # Node and NPM
 echo -e "\nInstalling Node..."
@@ -63,11 +54,6 @@ then
   rm -rf /tmp/tmux
   cd ~/dotfiles
 fi
-
-
-# Vundle
-echo -e "\nInstalling Vundle..."
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # TPM
 echo -e "\nInstalling TPM..."
