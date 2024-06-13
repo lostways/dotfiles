@@ -5,8 +5,6 @@
 # Update apt sources
 echo -e "\nUpdating APT Sources..."
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
-sudo add-apt-repository ppa:fish-shell/release-3
-sudo apt-get update
 
 # CURL
 echo -e "\nInstaling Curl.."
@@ -55,6 +53,22 @@ then
   cd ~/dotfiles
 fi
 
+#NVIM
+read -p "Install NVIM from source [y/n]?" -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt-get -y install ninja-build gettext cmake unzip curl build-essential
+    cd /tmp
+    git clone https://github.com/neovim/neovim
+    cd neovim
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    sudo make install
+    rm -rf /tmp/neovim
+    cd ~/dotfiles
+fi
+
+
 # TPM
 echo -e "\nInstalling TPM..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -71,6 +85,8 @@ sudo chsh -s $(which zsh) $(whoami)
 
 # FISH
 echo -e "\nInstalling FISH..."
+sudo add-apt-repository ppa:fish-shell/release-3
+sudo apt-get update
 sudo apt-get install fish -y
 
 # LSD
