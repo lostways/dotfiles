@@ -10,7 +10,7 @@ PWD=`pwd`
 # Backup existing files
 # ==============
 
-cp ~/.config/nvim/init.lua ~/.config/nvim/init.lua.bak
+cp -r ~/.config/nvim ~/.config/nvim.bak
 cp ~/.gitconfig ~/.gitconfig.bak
 cp ~/.tmux.conf ~/.tmux.conf.bak
 cp ~/.zshrc ~/.zshrc.bak
@@ -19,7 +19,7 @@ cp ~/.zshrc ~/.zshrc.bak
 # Remove existing files
 # ==============
 
-rm -rf ~/.config/nvim/init.lua
+rm -rf ~/.config/nvim
 rm -rf ~/.gitconfig
 rm -rf ~/.tmux.conf
 rm -rf ~/.zshrc
@@ -29,9 +29,9 @@ rm -rf ~/.zshrc
 # ==============
 
 # create nvim dir if it doesn't exist
-mkdir -p ~/.config/nvim
+# mkdir -p ~/.config/nvim
 
-ln -sf $PWD/nvim/init.lua ~/.config/nvim/init.lua
+ln -sf $PWD/nvim ~/.config/nvim
 ln -sf $PWD/.gitconfig ~/.gitconfig
 ln -sf $PWD/.tmux.conf ~/.tmux.conf
 
