@@ -4,3 +4,8 @@
 [alias]
         cmp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
         st  = "status"
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
