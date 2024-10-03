@@ -21,7 +21,13 @@ require("lazy").setup({
 		},
 		config = function()
 			vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle [E]xplorer" })
-			require("neo-tree").setup({})
+			require("neo-tree").setup({
+				filesystem = {
+					filtered_items = {
+						hide_dotfiles = false,
+					},
+				},
+			})
 		end,
 	},
 	{ "numToStr/Comment.nvim", opts = {} },
