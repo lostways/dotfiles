@@ -10,10 +10,10 @@ PWD=`pwd`
 # Backup existing files
 # ==============
 
-cp -r ~/.config/nvim ~/.config/nvim.bak
-cp ~/.gitconfig ~/.gitconfig.bak
-cp ~/.tmux.conf ~/.tmux.conf.bak
-cp ~/.zshrc ~/.zshrc.bak
+cp -r ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
+cp ~/.gitconfig ~/.gitconfig.bak 2>/dev/null || true
+cp ~/.tmux.conf ~/.tmux.conf.bak 2>/dev/null || true
+cp ~/.zshrc ~/.zshrc.bak 2>/dev/null || true
 
 # ==============
 # Remove existing files
@@ -23,17 +23,30 @@ rm -rf ~/.config/nvim
 rm -rf ~/.gitconfig
 rm -rf ~/.tmux.conf
 rm -rf ~/.zshrc
+sudo rm -rf /usr/local/bin/tm
 
 # ==============
-# Create symlinks to files
+# Ensure TPM is installed
 # ==============
 
-# create nvim dir if it doesn't exist
-# mkdir -p ~/.config/nvim
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    echo "TPM not found, installing..."
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
 
-ln -sf $PWD/nvim ~/.config/nvim
-ln -sf $PWD/.gitconfig ~/.gitconfig
-ln -sf $PWD/.tmux.conf ~/.tmux.conf
+# ==============
+# Copy files 
+# ==============
+
+cp -r $PWD/nvim ~/.config/
+cp $PWD/.gitconfig ~/.gitconfig
+cp $PWD/.tmux.conf ~/.tmux.conf
+
+# ==============
+# Copy scripts
+# ==============
+
+sudo cp $PWD/bin/tm /usr/local/bin
 
 # ==============
 # Create new zshrc that sources ours
@@ -43,27 +56,24 @@ ln -sf $PWD/.tmux.conf ~/.tmux.conf
 echo "source $PWD/.zshrc" > ~/.zshrc
 
 # ==============
-# Create links to scripts
+# Install tmux plugins
 # ==============
 
-sudo ln -sf $PWD/bin/tm /usr/local/bin
-
-# ==============
-# Reload tmux config
-# ==============
-
-tmux source-file ~/.tmux.conf
-
-# ==============
-# Install TPM Plugins
-# ==============
-
+tmux start-server
+tmux new-session -d -s __temp
+tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "~/.tmux/plugins"
 ~/.tmux/plugins/tpm/bin/install_plugins
+tmux kill-session -t __temp
 
 # ==============
 # Setup GitHub CoPilot
 # ==============
 
 nvim "+Copilot setup" +qall
+
+# ==============
+# Configure Fish
+# ==============
+fish -c "source $PWD/setup-fish.fish"
 
 cd $PWD
