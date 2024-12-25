@@ -9,6 +9,17 @@ vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
 require("lazy").setup({
+	{
+		"yetone/avante.nvim",
+		opts = {
+			provider = "claude",
+		},
+		dependencies = {
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+		},
+	},
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	"github/copilot.vim",
 	{
@@ -25,6 +36,7 @@ require("lazy").setup({
 				filesystem = {
 					filtered_items = {
 						hide_dotfiles = false,
+						hide_gitignore = false,
 					},
 				},
 			})
