@@ -14,6 +14,7 @@ cp -r ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
 cp ~/.gitconfig ~/.gitconfig.bak 2>/dev/null || true
 cp ~/.tmux.conf ~/.tmux.conf.bak 2>/dev/null || true
 cp ~/.zshrc ~/.zshrc.bak 2>/dev/null || true
+cp ~/.tmux-start ~/.tmux-start.bak 2>/dev/null || true
 
 # ==============
 # Remove existing files
@@ -23,6 +24,7 @@ rm -rf ~/.config/nvim
 rm -rf ~/.gitconfig
 rm -rf ~/.tmux.conf
 rm -rf ~/.zshrc
+rm -rf ~/.tmux-start
 sudo rm -rf /usr/local/bin/tm
 
 # ==============
@@ -41,6 +43,7 @@ fi
 cp -r $PWD/nvim ~/.config/
 cp $PWD/.gitconfig ~/.gitconfig
 cp $PWD/.tmux.conf ~/.tmux.conf
+cp $PWD/.tmux-start ~/.tmux-start
 
 # ==============
 # Copy scripts

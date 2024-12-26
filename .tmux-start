@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Tmux start script for new messions
+tmux new-window -n code
+tmux split-window -v -l 10
+tmux select-pane -t 0
+tmux send-keys "nvim ." C-m

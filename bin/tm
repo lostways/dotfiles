@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 
-# abort if we're already inside a TMUX session
-[[ "$TMUX" == "" ]] || exit 0
-# startup a "default" session if non currently exists
-# tmux has-session -t _default || tmux new-session -s _default -d
+switch_to() {
+	if [[ -n "$TMUX" ]]; then
+		tmux switch-client -t "$1"
+	else
+		tmux attach-session -t "$1"
+	fi
+}
+
+new_session() {
+	tmux new-session -ds "$1"
+	tmux send-keys -t $1 "source ~/.tmux-start" C-m
+}
 
 SESSION_NAME=$(basename "$PWD")
 
 # present menu for user to choose which workspace to open
 PS3="Please choose your session: "
+
 # shellcheck disable=SC2207
 IFS=$'\n' && options=("New Session" "Exit" $(tmux list-sessions -F "#S" 2>/dev/null))
 echo " "
@@ -19,13 +28,14 @@ select opt in "${options[@]}"
 do
 	case $opt in
 		"New Session")
-			tmux new-session -s "$SESSION_NAME" \; new-window -n code "nvim ." \; split-window -v -l 10 \; select-pane -t 0
+			new_session "$SESSION_NAME"
+			switch_to "$SESSION_NAME"
 			break
 			;;
 		"Exit")
 			break;;
 		*)
-			tmux attach-session -t "$opt"
+			switch_to "$opt"
 			break
 			;;
 	esac
