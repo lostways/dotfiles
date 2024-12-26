@@ -18,7 +18,7 @@ do
 	case $opt in
 		"New Session")
 			read -rp "Enter new session name: " SESSION_NAME
-			tmux new -s "$SESSION_NAME"
+			tmux new-session -s "$SESSION_NAME" \; new-window -n code "nvim ." \; split-window -v -l 10 \; select-pane -t 0
 			break
 			;;
 		"Exit")
