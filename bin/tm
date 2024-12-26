@@ -5,10 +5,12 @@
 # startup a "default" session if non currently exists
 # tmux has-session -t _default || tmux new-session -s _default -d
 
+SESSION_NAME=$(basename "$PWD")
+
 # present menu for user to choose which workspace to open
 PS3="Please choose your session: "
 # shellcheck disable=SC2207
-IFS=$'\n' && options=($(tmux list-sessions -F "#S" 2>/dev/null) "New Session" "Exit")
+IFS=$'\n' && options=("New Session" "Exit" $(tmux list-sessions -F "#S" 2>/dev/null))
 echo " "
 echo "Available sessions"
 echo "------------------"
@@ -17,7 +19,6 @@ select opt in "${options[@]}"
 do
 	case $opt in
 		"New Session")
-			read -rp "Enter new session name: " SESSION_NAME
 			tmux new-session -s "$SESSION_NAME" \; new-window -n code "nvim ." \; split-window -v -l 10 \; select-pane -t 0
 			break
 			;;
