@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Tmux start script for new messions
+tmux send-keys "source .venv/bin/activate.fish" C-m
 tmux new-window -n code
 tmux split-window -v -l 10
 tmux send-keys "source .venv/bin/activate.fish" C-m
