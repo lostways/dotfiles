@@ -49,6 +49,10 @@ fisher install IlanCosman/tide@v5
 echo "\nInstalling Z Plugin"
 fisher install jethrokuan/z
 
+# Alias
+echo "\nSetting up aliases..."
+alias --save vim="nvim"
+
 # Anthropic API Key
 echo "\nChecking for Anthropic API Key..."
 check_anthropic_key
