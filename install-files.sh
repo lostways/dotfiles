@@ -1,4 +1,54 @@
-#!/bin/bash
+#!/usr/bin/env bash
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+dry_run="0"
+
+if [[ $1 == "--dry-run" ]]; then
+    dry_run="1"
+fi
+
+log() {
+    if [[ $dry_run == "1" ]]; then
+        echo -e "[DRY_RUN] \033[1;33m$1\033[0m"
+        return
+    else
+        echo -e "\033[1;32m$1\033[0m"
+    fi
+}
+
+
+copy() {
+    log "removing $2"
+    if [[ $dry_run == "0" ]]; then
+        rm $2
+    fi
+
+    log "Copying $1 to $2"
+    if [[ $dry_run == "0" ]]; then
+        cp $1 $2
+    fi
+}
+
+copy_dir() {
+    pushd $1
+    to=$2
+    dirs=$(find . -maxdepth 1 -mindepth 1 -type d)
+    for dir in $dirs; do
+        directory=${2%/}/${dir#./}
+        log "Removing $directory"
+        if [[ $dry_run == "0" ]]; then
+            rm -rf $directory
+        fi
+
+        log "Copying $dir to $to/$dir"
+        if [[ $dry_run == "0" ]]; then
+            cp -r ./$dir $to
+        fi
+    done
+    popd
+}
+
+
+log "script dir: $script_dir"
 
 # Install Files
 
@@ -6,26 +56,6 @@
 
 PWD=`pwd`
 
-# ==============
-# Backup existing files
-# ==============
-
-cp -r ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
-cp ~/.gitconfig ~/.gitconfig.bak 2>/dev/null || true
-cp ~/.tmux.conf ~/.tmux.conf.bak 2>/dev/null || true
-cp ~/.zshrc ~/.zshrc.bak 2>/dev/null || true
-cp ~/.tmux-start ~/.tmux-start.bak 2>/dev/null || true
-
-# ==============
-# Remove existing files
-# ==============
-
-rm -rf ~/.config/nvim
-rm -rf ~/.gitconfig
-rm -rf ~/.tmux.conf
-rm -rf ~/.zshrc
-rm -rf ~/.tmux-start
-sudo rm -rf /usr/local/bin/tm
 
 # ==============
 # Ensure TPM is installed
@@ -40,23 +70,13 @@ fi
 # Copy files 
 # ==============
 
-cp -r $PWD/nvim ~/.config/
-cp $PWD/.gitconfig ~/.gitconfig
-cp $PWD/.tmux.conf ~/.tmux.conf
-cp $PWD/.tmux-start ~/.tmux-start
+copy_dir $script_dir/env/.config $HOME/.config
+copy_dir $script_dir/env/.local $HOME/.local
 
-# ==============
-# Copy scripts
-# ==============
-
-sudo cp $PWD/bin/tm /usr/local/bin
-
-# ==============
-# Create new zshrc that sources ours
-# Note: put all custom zshrc stuff in ~/.zshrc.local
-# ==============
-
-echo "source $PWD/.zshrc" > ~/.zshrc
+copy $script_dir/env/.gitconfig $HOME/.gitconfig
+copy $script_dir/env/.tmux.conf $HOME/.tmux.conf
+copy $script_dir/env/.tmux-start $HOME/.tmux-start
+copy $script_dir/env/.zshrc $HOME/.zshrc
 
 # ==============
 # Install tmux plugins

@@ -1,6 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Installs dependancies for dotfiles
+
+CWD = `pwd`
 
 # Update apt sources
 echo -e "\nUpdating APT Sources..."
@@ -50,7 +52,7 @@ then
   ./configure && make
   sudo make install
   rm -rf /tmp/tmux
-  cd ~/dotfiles
+  cd $CWD
 fi
 
 #NVIM
@@ -65,7 +67,7 @@ then
     make CMAKE_BUILD_TYPE=RelWithDebInfo
     sudo make install
     rm -rf /tmp/neovim
-    cd ~/dotfiles
+    cd $CWD
 fi
 
 
