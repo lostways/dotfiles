@@ -39,9 +39,10 @@ copy_dir() {
             rm -rf $directory
         fi
 
-        log "Copying $dir to $to/$dir"
+        log "Copying $dir to $directory"
         if [[ $dry_run == "0" ]]; then
-            cp -r ./$dir $to
+	    mkdir -p $(dirname $directory)
+	    cp -r $dir $(dirname $directory)
         fi
     done
     popd
