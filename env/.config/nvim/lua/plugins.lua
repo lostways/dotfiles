@@ -19,6 +19,7 @@ require("lazy").setup({
 				timeout = 30000,
 				temperature = 0,
 				max_tokens = 20480,
+				disable_tools = true,
 			},
 		},
 		dependencies = {
