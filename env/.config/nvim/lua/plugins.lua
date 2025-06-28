@@ -13,13 +13,17 @@ require("lazy").setup({
 		"yetone/avante.nvim",
 		opts = {
 			provider = "claude",
-			claude = {
-				endpoint = "https://api.anthropic.com",
-				model = "claude-sonnet-4-20250514",
-				timeout = 30000,
-				temperature = 0,
-				max_tokens = 20480,
-				disable_tools = true,
+			providers = {
+				claude = {
+					endpoint = "https://api.anthropic.com",
+					model = "claude-sonnet-4-20250514",
+					timeout = 30000,
+					disable_tools = true,
+					extra_request_body = {
+						temperature = 0.75,
+						max_tokens = 20480,
+					},
+				},
 			},
 		},
 		dependencies = {

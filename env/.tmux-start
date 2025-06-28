@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 # Tmux start script for new messions
-tmux send-keys "source .venv/bin/activate.fish" C-m
-tmux new-window -n code
-tmux split-window -v -l 10
-tmux send-keys "source .venv/bin/activate.fish" C-m
-tmux select-pane -t 0
+tmux rename-window "code"
 tmux send-keys "source .venv/bin/activate.fish" C-m
 tmux send-keys "nvim ." C-m
+tmux new-window
+tmux send-keys "source .venv/bin/activate.fish" C-m
+tmux send-keys "git st" C-m
+tmux new-window
+tmux send-keys "source .venv/bin/activate.fish" C-m
+tmux select-window -t "code"
