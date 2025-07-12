@@ -100,6 +100,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Set JavaScript files to use tabs displayed as 2 spaces
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "jsonc" },
+	callback = function()
+		vim.opt_local.tabstop = 2
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.softtabstop = 2
+		vim.opt_local.expandtab = false
+	end,
+})
+
 -- [[ LOAD PLUGINS ]] ----
 require("plugins")
 
