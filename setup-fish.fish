@@ -52,6 +52,13 @@ fisher install jethrokuan/z
 # Alias
 echo "\nSetting up aliases..."
 alias --save vim="nvim"
+if type -q lsd
+    alias --save ls="lsd"
+    alias --save ll="lsd -alh"
+    alias --save la="lsd -A"
+else
+    echo "\nlsd not found, skipping ls alias setup"
+end
 
 # Anthropic API Key
 echo "\nChecking for Anthropic API Key..."
