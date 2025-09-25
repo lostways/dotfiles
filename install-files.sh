@@ -62,6 +62,7 @@ PWD=`pwd`
 # Ensure TPM is installed
 # ==============
 
+log "Checking TPM..."
 if [ ! -d ~/.tmux/plugins/tpm ]; then
     echo "TPM not found, installing..."
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -71,6 +72,7 @@ fi
 # Copy files 
 # ==============
 
+log "Copying config files..."
 copy_dir $script_dir/env/.config $HOME/.config
 copy_dir $script_dir/env/.local $HOME/.local
 
@@ -81,9 +83,21 @@ copy $script_dir/env/.zshrc $HOME/.zshrc
 copy $script_dir/env/pyenv.fish $HOME/.config/fish/conf.d/pyenv.fish
 
 # ==============
+# Install Fonts
+# ==============
+
+log "Installing fonts..."
+if [ ! -d ~/.local/share/fonts ]; then
+    mkdir -p ~/.local/share/fonts
+fi
+unzip -o $script_dir/fonts/Hack.zip -d ~/.local/share/fonts
+fc-cache -f -v
+
+# ==============
 # Install tmux plugins
 # ==============
 
+log "Installing tmux plugins..."
 tmux start-server
 tmux new-session -d -s __temp
 tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "~/.tmux/plugins"
@@ -94,11 +108,14 @@ tmux kill-session -t __temp
 # Setup GitHub CoPilot
 # ==============
 
+log "Setting up GitHub CoPilot..."
 nvim "+Copilot setup" +qall
 
 # ==============
 # Configure Fish
 # ==============
+
+log "Configuring Fish..."
 fish -c "source $PWD/setup-fish.fish"
 
 cd $PWD
