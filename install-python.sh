@@ -20,10 +20,14 @@ curl https://pyenv.run | bash
 # setup dot files
 # =================
 
-grep -qxF 'source "$HOME/dotfiles/pyenv/.zprofile.pyenv"' ~/.zprofile || echo 'source "$HOME/dotfiles/pyenv/.zprofile.pyenv"' >> ~/.zprofile
-grep -qxF 'source "$HOME/dotfiles/pyenv/.profile.pyenv"' ~/.profile || echo 'source "$HOME/dotfiles/pyenv/.profile.pyenv"' >> ~/.profile
-grep -qxF 'source "$HOME/dotfiles/pyenv/.zshrc.pyenv"' ~/.zshrc.local || echo 'source "$HOME/dotfiles/pyenv/.zshrc.pyenv"' >> ~/.zshrc.local
+grep -qxF 'source "$HOME/pyenv/.zprofile.pyenv"' ~/.zprofile || echo 'source "$HOME/pyenv/.zprofile.pyenv"' >> ~/.zprofile
+grep -qxF 'source "$HOME/pyenv/.profile.pyenv"' ~/.profile || echo 'source "$HOME/pyenv/.profile.pyenv"' >> ~/.profile
+grep -qxF 'source "$HOME/pyenv/.zshrc.pyenv"' ~/.zshrc.local || echo 'source "$HOME/pyenv/.zshrc.pyenv"' >> ~/.zshrc.local
 
+# if we are in a fish shell
+if [ -f ~/.config/fish/config.fish ]; then
+    grep -qxF 'pyenv init - fish | source' ~/.config/fish/config.fish || echo 'pyenv init - fish | source' >> ~/.config/fish/config.fish
+fi
 
 # =================
 # Restart shell
@@ -38,9 +42,9 @@ source ~/.zshrc
 # =================
 
 pyenv update
-pyenv install 3.11.4
+pyenv install 3.13.7
 pyenv rehash
-pyenv global 3.11.4
+pyenv global 3.13.7
 pyenv versions
 
 echo "Please restart your session to finish install \n"

@@ -60,6 +60,11 @@ else
     echo "\nlsd not found, skipping ls alias setup"
 end
 
+# Setup PyEnv
+echo "\nSetting up PyEnv..."
+set -Ux PYENV_ROOT $HOME/.pyenv
+test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin
+
 # Anthropic API Key
 echo "\nChecking for Anthropic API Key..."
 check_anthropic_key
