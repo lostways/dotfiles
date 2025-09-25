@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 # Install Python
+python_version="3.13.7"
 
 # ================
 # Install build deps for pyenv
@@ -17,34 +18,13 @@ libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-d
 curl https://pyenv.run | bash
 
 # =================
-# setup dot files
-# =================
-
-grep -qxF 'source "$HOME/pyenv/.zprofile.pyenv"' ~/.zprofile || echo 'source "$HOME/pyenv/.zprofile.pyenv"' >> ~/.zprofile
-grep -qxF 'source "$HOME/pyenv/.profile.pyenv"' ~/.profile || echo 'source "$HOME/pyenv/.profile.pyenv"' >> ~/.profile
-grep -qxF 'source "$HOME/pyenv/.zshrc.pyenv"' ~/.zshrc.local || echo 'source "$HOME/pyenv/.zshrc.pyenv"' >> ~/.zshrc.local
-
-# if we are in a fish shell
-if [ -f ~/.config/fish/config.fish ]; then
-    grep -qxF 'pyenv init - fish | source' ~/.config/fish/config.fish || echo 'pyenv init - fish | source' >> ~/.config/fish/config.fish
-fi
-
-# =================
-# Restart shell
-# =================
-
-source ~/.zprofile
-source ~/.profile
-source ~/.zshrc
-
-# =================
 # Install Python with pyenv
 # =================
 
 pyenv update
-pyenv install 3.13.7
+pyenv install $python_version
 pyenv rehash
-pyenv global 3.13.7
+pyenv global $python_version
 pyenv versions
 
-echo "Please restart your session to finish install \n"
+echo "Please restart your session to finish installation!"
