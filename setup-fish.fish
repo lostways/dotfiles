@@ -60,6 +60,10 @@ else
     echo "\nlsd not found, skipping ls alias setup"
 end
 
+# add ~/.local/bin to PATH
+echo "\nAdding ~/.local/bin to PATH..."
+test -d $HOME/.local/bin; and fish_add_path $HOME/.local/bin
+
 # Setup PyEnv
 echo "\nSetting up PyEnv..."
 set -Ux PYENV_ROOT $HOME/.pyenv

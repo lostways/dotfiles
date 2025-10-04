@@ -116,6 +116,10 @@ nvim "+Copilot setup" +qall
 # ==============
 
 log "Configuring Fish..."
-fish -c "source $PWD/setup-fish.fish"
+
+# are we already using fish?
+if [ "$SHELL" != "$(which fish)" ]; then
+    fish -c "source $PWD/setup-fish.fish"
+fi
 
 cd $PWD

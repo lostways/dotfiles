@@ -95,6 +95,14 @@ sudo apt-get install fish -y
 echo -e "\nInstalling lsd..."
 sudo apt-get -y install lsd
 
+# Install Claude AI CLI
+echo -e "\nInstalling Claude AI CLI..."
+if ! [ -x "$(command -v claude)" ]; then
+  curl -fsSL https://claude.ai/install.sh | bash
+else
+  echo "Claude AI CLI already installed. Skipping..."
+fi
+
 # Done
 echo -e "\nDone!"
 echo -e "\n##########Restart session to continue##########"
