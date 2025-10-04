@@ -108,6 +108,11 @@ alias gs="git status"
 alias gc="git commit -m"
 alias ga="git add"
 
+# if we have lsd installed, use it instead of ls
+if command -v lsd 1>/dev/null 2>&1; then
+    alias ll="lsd -la"
+fi
+
 venv() {
   python3 -m venv .venv --prompt=${1:-venv} && . .venv/bin/activate && pip install -U pip setuptools wheel 
 }
