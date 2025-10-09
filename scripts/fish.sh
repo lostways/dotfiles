@@ -1,6 +1,5 @@
 # FISH
 log "Installing FISH..."
-sudo add-apt-repository ppa:fish-shell/release-3
 sudo apt-get update
 sudo apt-get install fish -y
 
@@ -9,8 +8,7 @@ sudo apt-get install fish -y
 # ==============
 
 log "Configuring Fish..."
-
 # are we already using fish?
 if [ "$SHELL" != "$(which fish)" ]; then
-    fish -c "source $PWD/setup-fish.fish"
+  fish -c "source ${script_dir}/scripts/setup-fish.fish"
 fi
