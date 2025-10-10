@@ -8,5 +8,6 @@ shell = { program = "/bin/zsh", args = ["-l"] }
 normal = { family = "HackNerdFont", style = "Regular" }
 
 [window]
+padding = { x = 14, y = 14 }
 decorations = "None"
 startup_mode = "Maximized"
