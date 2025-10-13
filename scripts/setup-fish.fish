@@ -49,26 +49,6 @@ fisher install IlanCosman/tide@v5
 echo "\nInstalling Z Plugin"
 fisher install jethrokuan/z
 
-# Alias
-echo "\nSetting up aliases..."
-alias --save vim="nvim"
-if type -q lsd
-    alias --save ls="lsd"
-    alias --save ll="lsd -alh"
-    alias --save la="lsd -A"
-else
-    echo "\nlsd not found, skipping ls alias setup"
-end
-
-# add ~/.local/bin to PATH
-echo "\nAdding ~/.local/bin to PATH..."
-test -d $HOME/.local/bin; and fish_add_path $HOME/.local/bin
-
-# Setup PyEnv
-echo "\nSetting up PyEnv..."
-set -Ux PYENV_ROOT $HOME/.pyenv
-test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin
-
 # Anthropic API Key
 echo "\nChecking for Anthropic API Key..."
 check_anthropic_key

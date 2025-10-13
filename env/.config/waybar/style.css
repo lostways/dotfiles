@@ -1,9 +1,25 @@
 * {
+	background-color: #cdd6f4;
+	color: #1a1b26;
 	border: none;
 	font-family: HackNerdFont;
 	font-size: 12px;
+	min-height: 0;
 }
 
 .modules-right {
 	margin-right: 8px;
+}
+
+#tray,
+#cpu,
+#battery,
+#network,
+#bluetooth,
+#pulseaudio,
+#custom-omarchy,
+#custom-screenrecording-indicator,
+#custom-update {
+  min-width: 12px;
+  margin: 0 7.5px;
 }

@@ -30,3 +30,7 @@ if [ "$SHELL" == "$(which zsh)" ]; then
     log "Reloading zsh configuration..."
     zsh -c "source $HOME/.zshrc"
 fi
+
+# reload waybar
+log "Reloading waybar..."
+killall -SIGUSR2 waybar 2>/dev/null || true
