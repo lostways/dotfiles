@@ -107,6 +107,8 @@ alias venva="source .venv/bin/activate"
 alias gs="git status"
 alias gc="git commit -m"
 alias ga="git add"
+alias vim="nvim"
+alias reload-waybar="killall -SIGUSR2 waybar"
 
 # if we have lsd installed, use it instead of ls
 if command -v lsd 1>/dev/null 2>&1; then

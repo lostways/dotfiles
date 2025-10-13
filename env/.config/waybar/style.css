@@ -1,0 +1,9 @@
+* {
+	border: none;
+	font-family: HackNerdFont;
+	font-size: 12px;
+}
+
+.modules-right {
+	margin-right: 8px;
+}
