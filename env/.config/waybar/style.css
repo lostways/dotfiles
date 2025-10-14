@@ -1,10 +1,14 @@
 * {
-	background-color: #cdd6f4;
-	color: #1a1b26;
+	/* background-color: #cdd6f4; */
+	color: #CCCCCC;
 	border: none;
 	font-family: HackNerdFont;
 	font-size: 12px;
 	min-height: 0;
+}
+
+window#waybar {
+	background-color: rgba(0, 0, 0, 0.9);
 }
 
 .modules-right {
