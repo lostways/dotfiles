@@ -1,10 +1,9 @@
 # Update apt sources
-log "Updating APT Sources..."
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
+#log "Updating APT Sources..."
+#sudo add-apt-repository ppa:neovim-ppa/unstable -y
 
-# NEOVIM
-log "Installing Neovim..."
-sudo apt-get -y install neovim
+log "Installing dependencies..."
+sudo apt-get -y install ripgrep
 
 #NVIM
 read -p "Install NVIM from source [y/n]?" -n 1 -r
@@ -15,10 +14,14 @@ then
     cd /tmp
     git clone https://github.com/neovim/neovim
     cd neovim
-    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    make CMAKE_BUILD_TYPE=Release
     sudo make install
     rm -rf /tmp/neovim
     cd $CWD
+else
+    # NEOVIM
+    log "Installing Neovim..."
+    sudo apt-get -y install neovim
 fi
 
 # ==============

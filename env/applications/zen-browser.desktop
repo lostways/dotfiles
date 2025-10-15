@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Zen Browser
+Comment=Browse the web with Zen Browser
+Exec=/opt/zen/zen
+Icon=/opt/zen/resources/app/icon.png
+Terminal=false
+Type=Application
+Categories=Network;WebBrowser;

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Color Picker
+Comment=Hyprpicker - A simple color picker tool
+Exec=/usr/bin/hyprpicker
+Terminal=false
+Type=Application
+Categories=Utility;

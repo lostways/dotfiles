@@ -1,0 +1,8 @@
+{
+  ".CodeMirror.vim-mode.insert-mode textarea": {
+    "j j": "vim:exit-insert-mode"
+  },
+  ".CodeMirror.vim-mode.normal-mode textarea": {
+    "\\ e": "view:toggle-distraction-free"
+  }
+}

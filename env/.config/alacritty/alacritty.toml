@@ -9,6 +9,6 @@ normal = { family = "HackNerdFont", style = "Regular" }
 size = 9.0
 
 [window]
-padding = { x = 14, y = 14 }
+padding = { x = 10, y = 10 }
 decorations = "None"
 startup_mode = "Maximized"

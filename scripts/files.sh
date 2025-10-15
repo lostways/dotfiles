@@ -11,19 +11,8 @@ copy $script_dir/env/.gitconfig $HOME/.gitconfig
 copy $script_dir/env/.tmux.conf $HOME/.tmux.conf
 copy $script_dir/env/.tmux-start $HOME/.tmux-start
 copy $script_dir/env/.zshrc $HOME/.zshrc
-copy $script_dir/env/pyenv.fish $HOME/.config/fish/conf.d/pyenv.fish
-
-# ==============
-# Configure Fish
-# =============
-
-# If fish is installed, run the fish setup script
-if command -v fish > /dev/null 2>&1; then
-    log "Configuring Fish shell..."
-    fish $script_dir/scripts/config-fish.fish
-else
-    log "Fish shell not found, skipping Fish configuration"
-fi
+copy $script_dir/env/fish/config.fish $HOME/.config/fish/config.fish
+copy $script_dir/env/inkdrop/keymap.json $HOME/.config/inkdrop/keymap.json
 
 # if we are in zsh reload the zsh config
 if [ "$SHELL" == "$(which zsh)" ]; then
