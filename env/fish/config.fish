@@ -17,6 +17,14 @@ end
 # add ~/.local/bin to PATH
 test -d $HOME/.local/bin; and fish_add_path $HOME/.local/bin
 
+# add /.cargo/bin to PATH
+fish_add_path $HOME/.cargo/bin
+
+# Set TERMINAL to alacritty if it exists
+if type -q alacritty
+    set -Ux TERMINAL alacritty
+end
+
 # Setup PyEnv
 set -Ux PYENV_ROOT $HOME/.pyenv
 test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin

@@ -20,6 +20,12 @@ if [ "$SHELL" == "$(which zsh)" ]; then
     zsh -c "source $HOME/.zshrc"
 fi
 
+# if we are in fish reload the fish config
+if [ "$SHELL" == "$(which fish)" ]; then
+    log "Reloading fish configuration..."
+    fish -c "source $HOME/.config/fish/config.fish"
+fi
+
 # reload waybar
 log "Reloading waybar..."
 killall -SIGUSR2 waybar 2>/dev/null || true

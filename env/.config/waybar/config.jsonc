@@ -2,14 +2,14 @@
     "reload_style_on_change": true,
     "layer": "top",
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": [],
+    "modules-center": ["clock"],
     "modules-right": [
       "bluetooth",
       "network",
       "pulseaudio",
       "cpu",
       "battery", 
-      "clock"
+      "tray"
   ],
     "hyprland/workspaces": {
 	    "on-click": "activate",
@@ -48,6 +48,11 @@
     "spacing": 1,
     "on-click": "omarchy-launch-wifi"
   },
+  "cpu": {
+    "format": "󰍛",
+    "interval": 5,
+    "on-click": "alacritty -e btop"
+  },
   "battery": {
     "format": "{capacity}% {icon}",
     "format-discharging": "{icon}",
@@ -76,8 +81,7 @@
   },
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "$TERMINAL --class=Wiremix -e wiremix",
-    "on-click-right": "pamixer -t",
+    "on-click": "alacritty --class=WireMix -e $HOME/.cargo/bin/wiremix",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
     "format-muted": "",
@@ -85,7 +89,9 @@
       "default": ["", "", ""]
     }
   },
-    "clock": {
-        "format-alt": "{:%a, %d. %b  %H:%M}"
-    }
+  "clock": {
+    "format": "{:%a, %b %d  %H:%M}",
+    "format-alt": "{:%a, %b %d %h:%M}",
+    "tooltip": false,
+  }
 }

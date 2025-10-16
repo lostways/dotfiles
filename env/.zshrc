@@ -100,6 +100,7 @@ source $ZSH/oh-my-zsh.sh
 
 # PATH
 export PATH=$PATH:$HOME/.local/scripts
+export PATH=$PATH:$HOME/.cargo/bin
 
 # Aliases
 alias ls="ls -la"
@@ -109,6 +110,11 @@ alias gc="git commit -m"
 alias ga="git add"
 alias vim="nvim"
 alias reload-waybar="killall -SIGUSR2 waybar"
+
+# Set TERMINAL to alacritty if it exists
+if command -v alacritty 1>/dev/null 2>&1; then
+    export TERMINAL=alacritty
+fi
 
 # if we have lsd installed, use it instead of ls
 if command -v lsd 1>/dev/null 2>&1; then
