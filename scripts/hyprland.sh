@@ -3,7 +3,9 @@ log "Installing Hyprland and dependencies"
 sudo apt install -y hyprland \
   waybar \
   wofi \
-  hyprpaper
+  hyprpaper \
+  swayosd \
+  dunst
 
 sudo apt install -y build-essential cmake git meson ninja-build \
     libwayland-dev wayland-protocols libcairo2-dev libjpeg-dev \
@@ -31,3 +33,6 @@ sudo cmake --install build
 rm -rf hyprutils.tar.gz
 rm -rf /tmp/hyprutils-0.10.0
 popd
+
+# Add user to video group for brightness control
+sudo usermod -aG video $USER
