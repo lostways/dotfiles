@@ -36,3 +36,6 @@ popd
 
 # Add user to video group for brightness control
 sudo usermod -aG video $USER
+
+# Disable the swayosd service to avoid caps lock notification
+sudo systemctl disable swayosd-libinput-backend.service
