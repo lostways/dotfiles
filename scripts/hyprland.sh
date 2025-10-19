@@ -5,7 +5,8 @@ sudo apt install -y hyprland \
   wofi \
   hyprpaper \
   swayosd \
-  dunst
+  dunst \
+  wl-clipboard
 
 sudo apt install -y build-essential cmake git meson ninja-build \
     libwayland-dev wayland-protocols libcairo2-dev libjpeg-dev \
