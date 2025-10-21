@@ -29,3 +29,8 @@ fi
 # reload waybar
 log "Reloading waybar..."
 killall -SIGUSR2 waybar 2>/dev/null || true
+
+# reload hyprpaper
+log "Reloading hyprpaper..."
+killall -SIGUSR1 hyprpaper 2>/dev/null || true
+hyprpaper&
