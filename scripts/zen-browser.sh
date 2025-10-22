@@ -8,6 +8,3 @@ sudo tar -xvf /tmp/zen.tar.xz -C /opt/
 sudo rm -f /usr/bin/zen
 sudo ln -s /opt/zen/zen /usr/bin/zen
 rm /tmp/zen.tar.xz
-
-#copy $script_dir/env/applications/zen-browser.desktop /usr/share/applications/zen-browser.desktop
-
