@@ -6,7 +6,8 @@ sudo apt install -y hyprland \
   hyprpaper \
   swayosd \
   dunst \
-  wl-clipboard
+  wl-clipboard \
+  wlogout
 
 sudo apt install -y build-essential cmake git meson ninja-build \
     libwayland-dev wayland-protocols libcairo2-dev libjpeg-dev \
