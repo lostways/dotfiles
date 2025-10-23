@@ -7,7 +7,9 @@ sudo apt install -y hyprland \
   swayosd \
   dunst \
   wl-clipboard \
-  wlogout
+  wlogout \
+  network-manager \
+  network-manager-applet
 
 sudo apt install -y build-essential cmake git meson ninja-build \
     libwayland-dev wayland-protocols libcairo2-dev libjpeg-dev \
