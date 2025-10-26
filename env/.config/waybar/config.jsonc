@@ -93,5 +93,10 @@
     "format": "{:%a, %b %d  %H:%M}",
     "format-alt": "{:%a, %b %d %h:%M}",
     "tooltip": false,
+  },
+  "tray": {
+    "icon-size": 12,
+    "spacing": 10,
+    "reverse-direction": true
   }
 }
