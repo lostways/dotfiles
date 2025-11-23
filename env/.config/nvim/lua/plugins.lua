@@ -583,7 +583,75 @@ require("lazy").setup({
 			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 		end,
 	},
+	{ -- Debugging support
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			"nvim-neotest/nvim-nio",
+			"theHamsta/nvim-dap-virtual-text",
+		},
+		config = function()
+			local dap = require("dap")
+			local dapui = require("dapui")
 
+			-- Setup dap-ui
+			dapui.setup()
+			require("nvim-dap-virtual-text").setup()
+
+			-- Configure for C/C++ with gdb
+			dap.adapters.gdb = {
+				type = "executable",
+				command = "gdb",
+				args = { "-i", "dap" },
+			}
+
+			dap.configurations.c = {
+				{
+					name = "Launch",
+					type = "gdb",
+					request = "launch",
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+					end,
+					cwd = "${workspaceFolder}",
+					stopAtBeginningOfMainSubprogram = false,
+				},
+				{
+					name = "Attach to process",
+					type = "gdb",
+					request = "attach",
+					pid = function()
+						return tonumber(vim.fn.input("PID: "))
+					end,
+					cwd = "${workspaceFolder}",
+				},
+			}
+
+			-- Auto-open/close UI when debugging starts/stops
+			dap.listeners.after.event_initialized["dapui_config"] = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited["dapui_config"] = function()
+				dapui.close()
+			end
+
+			-- Keybindings (note: <leader>b is already used for buffers, so using <leader>d prefix)
+			vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debug: Start/Continue" })
+			vim.keymap.set("n", "<F10>", dap.step_over, { desc = "Debug: Step Over" })
+			vim.keymap.set("n", "<F11>", dap.step_into, { desc = "Debug: Step Into" })
+			vim.keymap.set("n", "<F12>", dap.step_out, { desc = "Debug: Step Out" })
+			vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "[D]ebug: Toggle [B]reakpoint" })
+			vim.keymap.set("n", "<leader>dB", function()
+				dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+			end, { desc = "[D]ebug: Set Conditional [B]reakpoint" })
+			vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "[D]ebug: Open [R]EPL" })
+			vim.keymap.set("n", "<leader>dl", dap.run_last, { desc = "[D]ebug: Run [L]ast" })
+			vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "[D]ebug: Toggle [U]I" })
+		end,
+	},
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
 	-- place them in the correct locations.

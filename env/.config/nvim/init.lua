@@ -111,6 +111,20 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Define an autocommand group
+vim.api.nvim_create_augroup("CFileTabSettings", { clear = true })
+
+-- Create an autocommand for C file types
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "c",
+	group = "CFileTabSettings",
+	callback = function()
+		vim.opt_local.tabstop = 4 -- Number of spaces in a tab
+		vim.opt_local.shiftwidth = 4 -- Number of spaces to use for each indent
+		vim.opt_local.expandtab = true -- Convert tabs to spaces
+	end,
+})
+
 -- [[ LOAD PLUGINS ]] ----
 require("plugins")
 
