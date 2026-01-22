@@ -30,40 +30,40 @@ rm -rf hyprwayland-scanner.tar.gz
 rm -rf /tmp/hyprwayland-scanner-0.4.5
 popd
 
-wget -O /tmp/hyprutils.tar.gz https://github.com/hyprwm/hyprutils/archive/refs/tags/v0.10.0.tar.gz
+wget -O /tmp/hyprutils.tar.gz https://github.com/hyprwm/hyprutils/archive/refs/tags/v0.11.0.tar.gz
 pushd /tmp
 tar -xvf hyprutils.tar.gz
-cd hyprutils-0.10.0
+cd hyprutils-0.11.0
 cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
 cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
 sudo cmake --install build
 cd ..
 rm -rf hyprutils.tar.gz
-rm -rf /tmp/hyprutils-0.10.0
+rm -rf /tmp/hyprutils-0.11.0
 popd
 
-wget -O /tmp/hyprlang.tar.gz https://github.com/hyprwm/hyprlang/archive/refs/tags/v0.6.4.tar.gz
+wget -O /tmp/hyprlang.tar.gz https://github.com/hyprwm/hyprlang/archive/refs/tags/v0.6.8.tar.gz
 pushd /tmp
 tar -xvf hyprlang.tar.gz
-cd hyprlang-0.6.4
+cd hyprlang-0.6.8
 cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
 cmake --build ./build --config Release --target hyprlang -j`nproc 2>/dev/null || getconf _NPROCESSORS_CONF`
 sudo cmake --install ./build
 cd ..
 rm -rf hyprlang.tar.gz
-rm -rf /tmp/hyprlang-0.6.4
+rm -rf /tmp/hyprlang-0.6.8
 popd
 
-wget -O /tmp/hyprgraphics.tar.gz https://github.com/hyprwm/hyprgraphics/archive/refs/tags/v0.2.0.tar.gz
+wget -O /tmp/hyprgraphics.tar.gz https://github.com/hyprwm/hyprgraphics/archive/refs/tags/v0.5.0.tar.gz
 pushd /tmp
 tar -xvf hyprgraphics.tar.gz
-cd hyprgraphics-0.2.0
+cd hyprgraphics-0.5.0
 cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
 cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
 sudo cmake --install build
 cd ..
 rm -rf hyprgraphics.tar.gz
-rm -rf /tmp/hyprgraphics-0.2.0
+rm -rf /tmp/hyprgraphics-0.5.0
 popd
 
 log "Installing hyprpicker (a color picker for Hyprland)"
