@@ -26,11 +26,15 @@ if [ "$SHELL" == "$(which fish)" ]; then
     fish -c "source $HOME/.config/fish/config.fish"
 fi
 
-# reload waybar
-log "Reloading waybar..."
-killall -SIGUSR2 waybar 2>/dev/null || true
+# reload waybar if waybar is running
+if pgrep waybar >/dev/null; then
+    log "Reloading waybar..."
+    killall -SIGUSR2 waybar 2>/dev/null || true
+fi
 
-# reload hyprpaper
-log "Reloading hyprpaper..."
-killall -SIGUSR1 hyprpaper 2>/dev/null || true
-hyprpaper&
+# reload hyprpaper if hyprpaper is running
+if pgrep hyprpaper >/dev/null; then
+    log "Reloading hyprpaper..."
+    killall -SIGUSR1 hyprpaper 2>/dev/null || true
+    hyprpaper&
+fi
