@@ -38,3 +38,9 @@ if pgrep hyprpaper >/dev/null; then
     killall -SIGUSR1 hyprpaper 2>/dev/null || true
     hyprpaper&
 fi
+
+# reload hyprland if hyprland is running
+if pgrep hyprland >/dev/null; then
+    log "Reloading hyprland..."
+    hyprctl reload 2>/dev/null || true
+fi
