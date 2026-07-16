@@ -14,6 +14,12 @@ else
     echo "lsd not found, skipping ls alias setup"
 end
 
+if type -q batcat
+    alias cat="batcat"
+else
+    echo "bat not found, skipping cat alias setup"
+end
+
 # add ~/.local/bin to PATH
 test -d $HOME/.local/bin; and fish_add_path $HOME/.local/bin
 test -d $HOME/.local/scripts; and fish_add_path $HOME/.local/scripts

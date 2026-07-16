@@ -13,3 +13,6 @@ sudo apt-get -y install fd-find
 
 log "Installing fzf..."
 sudo apt-get -y install fzf
+
+log "Installing bat..."
+sudo apt-get -y install bat
