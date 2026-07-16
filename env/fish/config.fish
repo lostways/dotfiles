@@ -16,6 +16,7 @@ end
 
 # add ~/.local/bin to PATH
 test -d $HOME/.local/bin; and fish_add_path $HOME/.local/bin
+test -d $HOME/.local/scripts; and fish_add_path $HOME/.local/scripts
 
 # add /.cargo/bin to PATH
 fish_add_path $HOME/.cargo/bin
