@@ -1,4 +1,3 @@
-# Install Ripgrep
 log "Installing Ripgrep..."
 sudo apt-get -y install ripgrep
 
@@ -16,3 +15,6 @@ sudo apt-get -y install fzf
 
 log "Installing bat..."
 sudo apt-get -y install bat
+
+log "Installing lsd..."
+sudo apt-get -y install lsd
