@@ -11,92 +11,92 @@ sudo apt install -y hyprland \
   network-manager \
   network-manager-applet
 
-sudo apt install -y build-essential cmake git meson ninja-build \
+if ! sudo apt install -y build-essential cmake git meson ninja-build curl \
     libwayland-dev wayland-protocols libcairo2-dev libjpeg-dev \
     libpango1.0-dev libxkbcommon-dev libpugixml-dev libopengl-dev \
     libegl1-mesa-dev libgles2-mesa-dev libsdbus-c++-dev libdrm-dev \
-    libgbm-dev libwebp-dev libmagic-dev librsvg2-dev libpam0g-dev
+    libgbm-dev libwebp-dev libmagic-dev librsvg2-dev libpam0g-dev; then
+  log "ERROR: build dependencies failed to install, aborting"
+  log "If apt reports unsatisfiable versions, the package lists may be stale or corrupt:"
+  log "  sudo rm -rf /var/lib/apt/lists/* && sudo apt update"
+  exit 1
+fi
 
+# Build and install the latest release of a hyprwm package from source.
+# Returns non-zero (without aborting the whole script) if any stage fails.
+install_hypr_pkg() {
+  local name=$1
+  local tag version rc=0
 
-wget -O /tmp/hyprwayland-scanner.tar.gz https://github.com/hyprwm/hyprwayland-scanner/archive/refs/tags/v0.4.5.tar.gz
-pushd /tmp
-tar -xvf hyprwayland-scanner.tar.gz
-cd hyprwayland-scanner-0.4.5
-cmake -DCMAKE_INSTALL_PREFIX=/usr -B build
-cmake --build build -j `nproc`
-sudo cmake --install build
-cd ..
-rm -rf hyprwayland-scanner.tar.gz
-rm -rf /tmp/hyprwayland-scanner-0.4.5
-popd
+  tag=$(curl -sL "https://api.github.com/repos/hyprwm/$name/releases/latest" \
+    | grep -Po '"tag_name":\s*"\K[^"]+')
 
-wget -O /tmp/hyprutils.tar.gz https://github.com/hyprwm/hyprutils/archive/refs/tags/v0.11.0.tar.gz
-pushd /tmp
-tar -xvf hyprutils.tar.gz
-cd hyprutils-0.11.0
-cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
-cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
-sudo cmake --install build
-cd ..
-rm -rf hyprutils.tar.gz
-rm -rf /tmp/hyprutils-0.11.0
-popd
+  if [ -z "$tag" ]; then
+    log "ERROR: could not fetch latest release tag for hyprwm/$name"
+    return 1
+  fi
 
-wget -O /tmp/hyprlang.tar.gz https://github.com/hyprwm/hyprlang/archive/refs/tags/v0.6.8.tar.gz
-pushd /tmp
-tar -xvf hyprlang.tar.gz
-cd hyprlang-0.6.8
-cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
-cmake --build ./build --config Release --target hyprlang -j`nproc 2>/dev/null || getconf _NPROCESSORS_CONF`
-sudo cmake --install ./build
-cd ..
-rm -rf hyprlang.tar.gz
-rm -rf /tmp/hyprlang-0.6.8
-popd
+  version=${tag#v}
+  log "Installing $name $tag"
 
-wget -O /tmp/hyprgraphics.tar.gz https://github.com/hyprwm/hyprgraphics/archive/refs/tags/v0.5.0.tar.gz
-pushd /tmp
-tar -xvf hyprgraphics.tar.gz
-cd hyprgraphics-0.5.0
-cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
-cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
-sudo cmake --install build
-cd ..
-rm -rf hyprgraphics.tar.gz
-rm -rf /tmp/hyprgraphics-0.5.0
-popd
+  if ! wget -O /tmp/$name.tar.gz "https://github.com/hyprwm/$name/archive/refs/tags/$tag.tar.gz"; then
+    log "ERROR: failed to download hyprwm/$name $tag"
+    return 1
+  fi
+
+  pushd /tmp > /dev/null || return 1
+
+  if tar -xf $name.tar.gz && cd $name-$version; then
+    cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build \
+      && cmake --build ./build --config Release --target all -j$(nproc 2>/dev/null || getconf _NPROCESSORS_CONF) \
+      && sudo cmake --install build
+    rc=$?
+    cd ..
+  else
+    rc=1
+  fi
+
+  rm -rf $name.tar.gz $name-$version
+  popd > /dev/null
+
+  if [ $rc -ne 0 ]; then
+    log "ERROR: build/install of $name $tag failed"
+  fi
+  return $rc
+}
+
+# Track failed packages so a broken build is reported loudly at the end
+hypr_failures=()
+
+install_hypr_pkg_checked() {
+  install_hypr_pkg "$1" || hypr_failures+=("$1")
+}
+
+# Core libraries — hyprpicker and hyprlock link against these, so a failure here
+# makes everything downstream fail too. Stop rather than emit a wall of errors.
+for pkg in hyprwayland-scanner hyprutils hyprlang hyprgraphics; do
+  if ! install_hypr_pkg $pkg; then
+    log "ERROR: $pkg is a required dependency, aborting"
+    exit 1
+  fi
+done
 
 log "Installing hyprpicker (a color picker for Hyprland)"
-wget -O /tmp/hyprpicker.tar.gz https://github.com/hyprwm/hyprpicker/archive/refs/tags/v0.4.5.tar.gz
-pushd /tmp
-tar -xvf hyprpicker.tar.gz
-cd hyprpicker-0.4.5
-cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
-cmake --build ./build --config Release --target hyprpicker -j`nproc 2>/dev/null || getconf _NPROCESSORS_CONF`
-sudo cmake --install build
-cd ..
-rm -rf hyprpicker.tar.gz
-rm -rf /tmp/hyprpicker-0.4.5
-popd
+install_hypr_pkg_checked hyprpicker
 
-# Copy desktop file 
+# Copy desktop file
 copy $script_dir/env/applications/hyprpicker.desktop $HOME/.local/share/applications/hyprpicker.desktop
 
 log "Installing hyprlock (a screen locker for Hyprland)"
-wget -O /tmp/hyprlock.tar.gz https://github.com/hyprwm/hyprlock/archive/refs/tags/v0.9.2.tar.gz
-pushd /tmp
-tar -xvf hyprlock.tar.gz
-cd hyprlock-0.9.2
-cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -S . -B ./build
-cmake --build ./build --config Release --target hyprlock -j`nproc 2>/dev/null || getconf _NPROCESSORS_CONF`
-sudo cmake --install build
-cd ..
-rm -rf hyprlock.tar.gz
-rm -rf /tmp/hyprlock-0.9.2
-popd
+install_hypr_pkg_checked hyprlock
 
 # Add user to video group for brightness control
 sudo usermod -aG video $USER
 
 # Disable the swayosd service to avoid caps lock notification
 sudo systemctl disable swayosd-libinput-backend.service
+
+if [ ${#hypr_failures[@]} -ne 0 ]; then
+  log "ERROR: the following packages failed to install: ${hypr_failures[*]}"
+  exit 1
+fi
