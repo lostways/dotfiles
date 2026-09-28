@@ -129,6 +129,50 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- [[ Claude Code ]]
+-- <leader>cc opens claude in a vertical split, hides it if it's the current
+-- window and focuses it if it's open elsewhere. Hiding keeps the session.
+local claude_buf
+vim.keymap.set("n", "<leader>cc", function()
+	if vim.fn.executable("claude") == 0 then
+		vim.notify("claude is not installed (./install.sh claude)", vim.log.levels.WARN)
+		return
+	end
+	local win = claude_buf and vim.fn.bufwinid(claude_buf) or -1
+	if win == vim.api.nvim_get_current_win() then
+		vim.api.nvim_win_hide(win)
+		return
+	end
+	if win ~= -1 then
+		vim.api.nvim_set_current_win(win)
+	else
+		vim.cmd("vsplit")
+		if claude_buf and vim.api.nvim_buf_is_valid(claude_buf) then
+			vim.api.nvim_win_set_buf(0, claude_buf)
+		else
+			vim.cmd.terminal("claude")
+			claude_buf = vim.api.nvim_get_current_buf()
+			vim.bo[claude_buf].buflisted = false
+		end
+	end
+	vim.cmd("startinsert")
+end, { desc = "Toggle [C]laude [C]ode" })
+
+-- Reload files changed outside nvim (e.g. by claude). autoread only reloads
+-- when nvim checks, so check when coming back to nvim or a window, and every
+-- second so files open next to claude update while it works.
+vim.opt.autoread = true
+local function checktime()
+	if vim.fn.mode() ~= "c" and vim.fn.getcmdwintype() == "" then
+		vim.cmd("silent! checktime")
+	end
+end
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "WinEnter", "TermLeave", "CursorHold" }, {
+	group = vim.api.nvim_create_augroup("auto-reload", { clear = true }),
+	callback = checktime,
+})
+vim.uv.new_timer():start(1000, 1000, vim.schedule_wrap(checktime))
+
 -- [[ LOAD PLUGINS ]] ----
 require("plugins")
 
