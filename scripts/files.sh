@@ -68,8 +68,9 @@ fi
 # reload hyprpaper if hyprpaper is running
 if pgrep hyprpaper >/dev/null; then
     log "Reloading hyprpaper..."
-    killall -SIGUSR1 hyprpaper 2>/dev/null || true
-    hyprpaper&
+    killall -w hyprpaper 2>/dev/null || true
+    # start it through hyprland so it isn't tied to this terminal
+    hyprctl dispatch exec hyprpaper >/dev/null
 fi
 
 # reload hyprland if hyprland is running
