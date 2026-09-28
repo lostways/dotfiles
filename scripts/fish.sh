@@ -1,11 +1,11 @@
 # FISH
 # fish is the interactive shell, but the login shell stays bash, which hands
-# interactive sessions off to fish (see env/.config/bash/fish-handoff.sh)
+# interactive sessions off to fish (see cli/.config/bash/fish-handoff.sh)
 log "Installing FISH..."
 sudo apt-get update
 sudo apt-get install -y fish curl
 
-if [[ $(getent passwd "$USER" | cut -d: -f7) != "$(command -v bash)" ]]; then
+if [[ $(basename "$(getent passwd "$USER" | cut -d: -f7)") != bash ]]; then
   log "Setting bash as the login shell..."
   sudo chsh -s "$(command -v bash)" "$USER"
 fi
@@ -25,7 +25,7 @@ fi
 # ==============
 
 log "Configuring Fish..."
-# plugins are listed in env/.config/fish/fish_plugins, linked by `files`
+# plugins are listed in cli/.config/fish/fish_plugins, linked by `files`
 if [ ! -e "$HOME/.config/fish/fish_plugins" ]; then
   log "ERROR: ~/.config/fish/fish_plugins not found, run ./install.sh files first"
   exit 1

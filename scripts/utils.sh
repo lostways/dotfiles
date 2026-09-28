@@ -4,7 +4,7 @@ sudo apt-get -y install ripgrep
 log "Installing btop..."
 sudo apt-get -y install btop
 
-log "Istalling jq..."
+log "Installing jq..."
 sudo apt-get -y install jq
 
 log "Installing fd-find..."

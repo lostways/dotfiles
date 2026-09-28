@@ -1,33 +1,28 @@
-# Update apt sources
-#log "Updating APT Sources..."
-#sudo add-apt-repository ppa:neovim-ppa/unstable -y
+# NVIM
+# The official release build, apt's neovim is too old for the plugin config on
+# Debian/Ubuntu LTS releases.
 
 log "Installing dependencies..."
-sudo apt-get -y install ripgrep
+# git: lazy.nvim, make/gcc: telescope-fzf-native and treesitter parsers,
+# unzip/curl: mason, ripgrep: telescope live grep
+sudo apt-get install -y git make gcc unzip curl ripgrep
 
-#NVIM
-read -p "Install NVIM from source [y/n]?" -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    sudo apt-get -y install ninja-build gettext cmake unzip curl build-essential
-    cd /tmp
-    git clone https://github.com/neovim/neovim
-    cd neovim
-    git checkout stable
-    make CMAKE_BUILD_TYPE=Release
-    sudo make install
-    rm -rf /tmp/neovim
-    cd $CWD
-else
-    # NEOVIM
-    log "Installing Neovim..."
-    sudo apt-get -y install neovim
-fi
+case $(uname -m) in
+    x86_64) arch=x86_64 ;;
+    aarch64|arm64) arch=arm64 ;;
+    *) log "ERROR: no neovim release build for $(uname -m)"; exit 1 ;;
+esac
 
-# ==============
-# Setup GitHub CoPilot
-# ==============
+log "Installing Neovim ($arch)..."
+curl -fL -o /tmp/nvim.tar.gz "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-$arch.tar.gz"
+sudo rm -rf /opt/nvim-linux-$arch
+sudo tar -xzf /tmp/nvim.tar.gz -C /opt
+rm /tmp/nvim.tar.gz
+sudo ln -sf /opt/nvim-linux-$arch/bin/nvim /usr/local/bin/nvim
+nvim --version | head -1
 
-log "Setting up GitHub CoPilot..."
-nvim "+Copilot setup" +qall
+log "Installing plugins..."
+# restore installs the commits pinned in lazy-lock.json, sync would update them
+nvim --headless "+Lazy! restore" +qa
+
+log "Run :Copilot setup in nvim to sign in to GitHub Copilot (needs Node, ./install.sh npm)"

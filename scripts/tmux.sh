@@ -1,27 +1,7 @@
-# Install TMUX via apt
+# Install TMUX via apt (git is needed for TPM)
 log "Installing TMUX via APT..."
-sudo apt-get -y install tmux
+sudo apt-get -y install tmux git
 tmux -V
-
-# TMUX
-read -p "Install TMUX from source [y/n]?" -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-  echo "\nInstalling TMUX"
-  #sudo apt-get -y install tmux
-  sudo apt-get -y install libevent-dev
-  sudo apt-get -y install ncurses-dev
-  sudo apt-get -y install autoconf automake pkg-config byacc
-  cd /tmp
-  git clone https://github.com/tmux/tmux.git
-  cd tmux
-  sh autogen.sh
-  ./configure && make
-  sudo make install
-  rm -rf /tmp/tmux
-  cd $CWD
-fi
 
 # ==============
 # Ensure TPM is installed
