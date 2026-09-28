@@ -53,16 +53,10 @@ if [[ $dry_run == "0" ]]; then
     stow --no-folding --restow -d "$script_dir" -t "$HOME" env
 fi
 
-# if we are in zsh reload the zsh config
-if [ "$SHELL" == "$(which zsh)" ]; then
-    log "Reloading zsh configuration..."
-    zsh -c "source $HOME/.zshrc"
-fi
-
-# if we are in fish reload the fish config
-if [ "$SHELL" == "$(which fish)" ]; then
-    log "Reloading fish configuration..."
-    fish -c "source $HOME/.config/fish/config.fish"
+# reload every running fish shell (see __dotfiles_reload_config in config.fish)
+if command -v fish >/dev/null; then
+    log "Reloading fish shells..."
+    fish -c 'set -U __dotfiles_reload (date +%s%N)' >/dev/null
 fi
 
 # reload waybar if waybar is running

@@ -18,3 +18,9 @@ sudo apt-get -y install bat
 
 log "Installing lsd..."
 sudo apt-get -y install lsd
+
+# Ubuntu installs these as batcat and fdfind, link them to their usual names
+log "Linking bat and fd into ~/.local/bin..."
+mkdir -p ~/.local/bin
+ln -sf /usr/bin/batcat ~/.local/bin/bat
+ln -sf /usr/bin/fdfind ~/.local/bin/fd
