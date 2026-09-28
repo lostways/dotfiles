@@ -1,9 +1,6 @@
 [general]
 live_config_reload = true
 
-[terminal]
-shell = { program = "/bin/zsh", args = ["-l"] }
-
 [font]
 normal = { family = "HackNerdFont", style = "Regular" }
 size = 9.0

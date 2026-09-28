@@ -19,25 +19,29 @@ if command -v pyenv >/dev/null 2>&1
     pyenv init - fish | source
 end
 
-# Alias
-alias vim="nvim"
-alias reload-waybar="killall -SIGUSR2 waybar"
-if type -q lsd
-    alias ls="lsd"
-    alias ll="lsd -alh"
-    alias la="lsd -A"
-else
-    echo "lsd not found, skipping ls alias setup"
-end
+# Everything below is for interactive shells only. Output here would break
+# scp/rsync, which run through non-interactive shells.
+if status is-interactive
+    # Alias
+    alias vim="nvim"
+    alias reload-waybar="killall -SIGUSR2 waybar"
+    if type -q lsd
+        alias ls="lsd"
+        alias ll="lsd -alh"
+        alias la="lsd -A"
+    else
+        echo "lsd not found, skipping ls alias setup"
+    end
 
-if type -q bat
-    alias cat="bat"
-else
-    echo "bat not found, skipping cat alias setup"
-end
+    if type -q bat
+        alias cat="bat"
+    else
+        echo "bat not found, skipping cat alias setup"
+    end
 
-# ./install.sh files changes this universal variable, which every open fish
-# shell sees, so they all pick up the new config
-function __dotfiles_reload_config --on-variable __dotfiles_reload
-    source $HOME/.config/fish/config.fish
+    # ./install.sh files changes this universal variable, which every open fish
+    # shell sees, so they all pick up the new config
+    function __dotfiles_reload_config --on-variable __dotfiles_reload
+        source $HOME/.config/fish/config.fish
+    end
 end
