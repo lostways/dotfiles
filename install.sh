@@ -4,6 +4,7 @@ dry_run="0"
 
 if [[ $1 == "--dry-run" ]]; then
     dry_run="1"
+    shift
 fi
 
 log() {
