@@ -84,9 +84,6 @@ done
 log "Installing hyprpicker (a color picker for Hyprland)"
 install_hypr_pkg_checked hyprpicker
 
-# Copy desktop file
-copy $script_dir/env/applications/hyprpicker.desktop $HOME/.local/share/applications/hyprpicker.desktop
-
 log "Installing hyprlock (a screen locker for Hyprland)"
 install_hypr_pkg_checked hyprlock
 

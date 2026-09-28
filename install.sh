@@ -16,41 +16,7 @@ log() {
 }
 
 
-copy() {
-    log "removing $2"
-    if [[ $dry_run == "0" ]]; then
-        rm $2
-    fi
-
-    log "Copying $1 to $2"
-    if [[ $dry_run == "0" ]]; then
-        cp $1 $2
-    fi
-}
-
-copy_dir() {
-    pushd $1
-    to=$2
-    dirs=$(find . -maxdepth 1 -mindepth 1 -type d)
-    for dir in $dirs; do
-        directory=${2%/}/${dir#./}
-        log "Removing $directory"
-        if [[ $dry_run == "0" ]]; then
-            rm -rf $directory
-        fi
-
-        log "Copying $dir to $directory"
-        if [[ $dry_run == "0" ]]; then
-	    mkdir -p $(dirname $directory)
-	    cp -r $dir $(dirname $directory)
-        fi
-    done
-    popd
-}
-
 export -f log
-export -f copy
-export -f copy_dir
 export dry_run
 export script_dir
 

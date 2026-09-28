@@ -1,18 +1,57 @@
 #!/bin/env bash
 # ==============
-# Copy files 
+# Link files into $HOME with GNU stow
 # ==============
 
-log "Copying config files..."
-copy_dir $script_dir/env/.config $HOME/.config
-copy_dir $script_dir/env/.local $HOME/.local
+if ! command -v stow >/dev/null; then
+    log "Installing stow..."
+    if [[ $dry_run == "0" ]]; then
+        sudo apt-get install -y stow
+    fi
+fi
 
-copy $script_dir/env/.gitconfig $HOME/.gitconfig
-copy $script_dir/env/.tmux.conf $HOME/.tmux.conf
-copy $script_dir/env/.tmux-start $HOME/.tmux-start
-copy $script_dir/env/.zshrc $HOME/.zshrc
-copy $script_dir/env/fish/config.fish $HOME/.config/fish/config.fish
-copy $script_dir/env/inkdrop/keymap.json $HOME/.config/inkdrop/keymap.json
+# Move anything in the way of a link out of the way. Files identical to the
+# repo copy are just removed, anything else is kept as <file>.bak
+log "Checking for conflicting files..."
+pushd $script_dir/env > /dev/null
+while IFS= read -r -d '' file; do
+    rel=${file#./}
+    source="$script_dir/env/$rel"
+    target="$HOME/$rel"
+
+    # nothing there, or already linked to the repo
+    if [[ ! -e $target && ! -L $target ]]; then
+        continue
+    fi
+    if [[ $(readlink -f "$target") == $(readlink -f "$source") ]]; then
+        continue
+    fi
+
+    if [[ -f $target && ! -L $target ]] && cmp -s "$target" "$source"; then
+        log "Removing $target (same as repo)"
+        if [[ $dry_run == "0" ]]; then
+            rm "$target"
+        fi
+        continue
+    fi
+
+    backup="$target.bak"
+    if [[ -e $backup || -L $backup ]]; then
+        backup="$target.bak.$(date +%Y%m%d%H%M%S)"
+    fi
+    log "Backing up $target to $backup"
+    if [[ $dry_run == "0" ]]; then
+        mv "$target" "$backup"
+    fi
+done < <(find . \( -type f -o -type l \) -print0)
+popd > /dev/null
+
+# --no-folding links individual files instead of whole directories, so apps
+# writing new files into e.g. ~/.config/fish don't end up in the repo
+log "Linking $script_dir/env into $HOME..."
+if [[ $dry_run == "0" ]]; then
+    stow --no-folding --restow -d "$script_dir" -t "$HOME" env
+fi
 
 # if we are in zsh reload the zsh config
 if [ "$SHELL" == "$(which zsh)" ]; then
