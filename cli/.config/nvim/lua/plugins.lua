@@ -1,7 +1,7 @@
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 	vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 end ---@diagnostic disable-next-line: undefined-field
@@ -124,15 +124,24 @@ require("lazy").setup({
 		end,
 	},
 
+	{ -- Lua LSP types for the Neovim API and plugins, for editing this config
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+
 	{ -- LSP Configuration & Plugins
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			-- Automatically install LSPs and related tools to stdpath for Neovim
-			{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
-			"williamboman/mason-lspconfig.nvim",
+			{ "mason-org/mason.nvim", opts = {} }, -- NOTE: Must be loaded before dependants
+			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{ "j-hui/fidget.nvim", opts = {} },
-			{ "folke/neodev.nvim", opts = {} },
 			"hrsh7th/cmp-nvim-lsp",
 		},
 		config = function()
@@ -232,8 +241,7 @@ require("lazy").setup({
 			--  By default, Neovim doesn't support everything that is in the LSP specification.
 			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
 			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+			vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
 
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -247,7 +255,15 @@ require("lazy").setup({
 			local servers = {
 				clangd = {},
 				-- gopls = {},
-				pyright = {},
+				-- pyright's features without needing node (installed from pypi)
+				basedpyright = {
+					settings = {
+						basedpyright = {
+							-- basedpyright defaults to "recommended", which is much stricter than pyright
+							analysis = { typeCheckingMode = "standard" },
+						},
+					},
+				},
 				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
@@ -277,36 +293,66 @@ require("lazy").setup({
 				},
 			}
 
+			for name, config in pairs(servers) do
+				vim.lsp.config(name, config)
+			end
+
 			-- Ensure the servers and tools above are installed
 			--  To check the current status of installed tools and/or manually install
 			--  other tools, you can run
 			--    :Mason
 			--
 			--  You can press `g?` for help in this menu.
-			require("mason").setup()
+			--
+			-- Nothing here needs node. basedpyright, black and isort install into a
+			-- python venv, so only ask for them when that's possible, otherwise mason
+			-- errors on every start. biome comes from scripts/nvim.sh, mason's biome
+			-- package installs with npm.
+			local has_venv = vim.fn.executable("python3") == 1
+				and vim.system({ "python3", "-c", "import ensurepip, venv" }):wait().code == 0
+			local needs = { basedpyright = has_venv, black = has_venv, isort = has_venv }
 
-			-- You can add other tools here that you want Mason to install
-			-- for you, so that they are available from within Neovim.
-			local ensure_installed = vim.tbl_keys(servers or {})
+			local ensure_installed = vim.tbl_keys(servers)
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
-				"prettier", -- Used to format JS/TS/JSON code
 				"black", -- Used to format Python code
+				"isort", -- Used to sort Python imports
 			})
+			ensure_installed = vim.tbl_filter(function(tool)
+				return needs[tool] ~= false
+			end, ensure_installed)
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+			-- Only enable the servers above. Mason also installs tools like stylua that
+			-- have an LSP mode, and those shouldn't attach as language servers.
 			require("mason-lspconfig").setup({
-				handlers = {
-					function(server_name)
-						local server = servers[server_name] or {}
-						-- This handles overriding only values explicitly passed
-						-- by the server configuration above. Useful when disabling
-						-- certain features of an LSP (for example, turning off formatting for tsserver)
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						require("lspconfig")[server_name].setup(server)
-					end,
-				},
+				ensure_installed = {},
+				automatic_enable = vim.tbl_keys(servers),
 			})
+
+			-- JS/TS: TypeScript 7's native language server (tsc --lsp), no node
+			-- needed. It comes from scripts/nvim.sh, mason's package installs with npm,
+			-- so it's enabled here rather than listed in servers.
+			if vim.fn.executable("tsc") == 1 then
+				vim.lsp.enable("tsc")
+			end
+
+			-- JS/TS linting: biome's language server (unused variables, const
+			-- reassignment, ...), installed by scripts/nvim.sh. lspconfig only attaches
+			-- it to projects that use biome, attach it to every JS/TS file instead.
+			-- Limited to JS/TS: on other filetypes (json, css) it would also become the
+			-- format on save fallback and reformat files like package.json.
+			if vim.fn.executable("biome") == 1 then
+				vim.lsp.config("biome", {
+					filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+					workspace_required = false,
+					root_dir = function(bufnr, on_dir)
+						local markers = { { "biome.json", "biome.jsonc" }, { "package.json", ".git" } }
+						on_dir(vim.fs.root(bufnr, markers) or vim.fn.getcwd())
+					end,
+				})
+				vim.lsp.enable("biome")
+			end
 		end,
 	},
 
@@ -317,14 +363,15 @@ require("lazy").setup({
 			{
 				"<leader>f",
 				function()
-					require("conform").format({ async = true, lsp_fallback = true })
+					require("conform").format({ async = true, lsp_format = "fallback" })
 				end,
 				mode = "",
 				desc = "[F]ormat buffer",
 			},
 		},
 		opts = {
-			notify_on_error = false,
+			-- show why a buffer didn't format instead of failing silently
+			notify_on_error = true,
 			format_on_save = function(bufnr)
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
@@ -332,7 +379,7 @@ require("lazy").setup({
 				local disable_filetypes = { c = true, cpp = true, php = true }
 				return {
 					timeout_ms = 10000,
-					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+					lsp_format = disable_filetypes[vim.bo[bufnr].filetype] and "never" or "fallback",
 				}
 			end,
 			formatters_by_ft = {
@@ -342,16 +389,14 @@ require("lazy").setup({
 				--
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
-				javascript = { "prettier" },
-				javascriptreact = { "prettier" },
-				typescript = { "prettier" },
-				typescriptreact = { "prettier" },
+				-- biome is a single binary (no node), installed by scripts/nvim.sh
+				javascript = { "biome" },
+				javascriptreact = { "biome" },
+				typescript = { "biome" },
+				typescriptreact = { "biome" },
 			},
-			formatters = {
-				prettier = {
-					args = { "--use-tabs", "--tab-width", "2", "--stdin-filepath", "$FILENAME" },
-				},
-			},
+			-- biome uses the project's biome.json, or without one the buffer's indent
+			-- settings (tabs, width 2 for JS/TS, see init.lua)
 		},
 	},
 
@@ -411,6 +456,7 @@ require("lazy").setup({
 					end, { "i", "s" }),
 				}),
 				sources = {
+					{ name = "lazydev", group_index = 0 },
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 					{ name = "path" },
@@ -484,35 +530,64 @@ require("lazy").setup({
 		end,
 	},
 	{ -- Highlight, edit, and navigate code
+		-- The main branch is the rewrite for Neovim 0.12 (master is archived and its
+		-- query directives error on 0.12, e.g. highlighting LSP hover markdown).
+		-- Parsers are compiled with the tree-sitter CLI, installed by scripts/nvim.sh.
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false, -- doesn't support lazy loading
 		build = ":TSUpdate",
-		opts = {
-			ensure_installed = { "bash", "c", "diff", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
-			-- Autoinstall languages that are not installed
-			auto_install = true,
-			highlight = {
-				enable = true,
-				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-				--  If you are experiencing weird indenting issues, add the language to
-				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
-		},
-		config = function(_, opts)
-			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+		config = function()
+			local ts = require("nvim-treesitter")
 
-			-- Prefer git instead of curl in order to improve connectivity in some environments
-			require("nvim-treesitter.install").prefer_git = true
-			---@diagnostic disable-next-line: missing-fields
-			require("nvim-treesitter.configs").setup(opts)
+			-- scripts/nvim.sh installs these ahead of time through vim.g.ts_parsers
+			vim.g.ts_parsers = {
+				"bash",
+				"c",
+				"diff",
+				"html",
+				"javascript",
+				"json",
+				"lua",
+				"luadoc",
+				"markdown",
+				"markdown_inline",
+				"python",
+				"tsx",
+				"typescript",
+				"vim",
+				"vimdoc",
+			}
+			ts.install(vim.g.ts_parsers)
 
-			-- There are additional nvim-treesitter modules that you can use to interact
-			-- with nvim-treesitter. You should go explore a few and see what interests you:
-			--
-			--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-			--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+			vim.api.nvim_create_autocmd("FileType", {
+				group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
+				callback = function(args)
+					local lang = vim.treesitter.language.get_lang(args.match)
+					if not lang then
+						return
+					end
+					-- Autoinstall languages that are not installed, highlighting starts
+					-- the next time a file of that type is opened
+					if
+						not vim.list_contains(ts.get_installed(), lang)
+						and vim.list_contains(ts.get_available(), lang)
+					then
+						ts.install(lang)
+						return
+					end
+					if not pcall(vim.treesitter.start, args.buf, lang) then
+						return
+					end
+					-- Some languages depend on vim's regex highlighting system (such as
+					-- Ruby) for indent rules, so keep that and skip treesitter indent.
+					if lang == "ruby" then
+						vim.bo[args.buf].syntax = "ON"
+					else
+						vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end
+				end,
+			})
 		end,
 	},
 	{ -- Debugging support
